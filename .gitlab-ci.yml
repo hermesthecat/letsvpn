@@ -16,7 +16,7 @@ variables:
 build_node:
   stage: Build Node Frontend
   only:
-  #  - staging
+    - staging
     - production
   image: node:15.5.0  # previously 14.8.0
   # Required if you separate the UI and backend repo
@@ -39,14 +39,12 @@ build_node:
 
 build_image:
   stage: Build Docker Image
-  #only:
-  #  - staging
-  #  - production
+  only:
+    - staging
+    - production
   image: docker
   script:
-    #- sleep 600
-    #- tar -cvf app.tar api/ http/
-    - tar -cvf app.tar api/
+    - tar -cvf app.tar api/ http/
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     # Use this line for the first build
     - docker build --network=host --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA --tag $CI_REGISTRY_IMAGE:latest .

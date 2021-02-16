@@ -1,0 +1,16 @@
+venv/*
+*.pyc
+*._
+.DS_Store
+__pycache__
+.idea
+output
+env
+*.env
+tmp
+download
+api/uploads
+api/staticfiles
+data
+api/data
+junk

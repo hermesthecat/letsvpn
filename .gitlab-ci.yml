@@ -1,0 +1,58 @@
+
+stages:
+  - Build Node Frontend
+  - Build Docker Image
+
+
+services:
+  - docker:18.03-dind
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_HOST: tcp://localhost:2375
+  DOCKER_TLS_CERTDIR: ""
+
+
+build_node:
+  stage: Build Node Frontend
+  only:
+  #  - staging
+    - production
+  image: node:15.5.0  # previously 14.8.0
+  # Required if you separate the UI and backend repo
+  #variables:
+  #  GIT_SUBMODULE_STRATEGY: recursive
+  artifacts:
+    paths:
+      - /builds/cclloyd/django-react-boilerplate/http
+  cache:
+    key: "node_modules"
+    paths:
+      - ui/node_modules
+  script:
+    #- sleep 600
+    - cd ui
+    - yarn install --network-timeout 600000  # 600000ms == 10 min; required as a workaround for @material-ui/icons
+    - CI=false yarn build
+    - mv build ../http
+
+
+build_image:
+  stage: Build Docker Image
+  #only:
+  #  - staging
+  #  - production
+  image: docker
+  script:
+    #- sleep 600
+    #- tar -cvf app.tar api/ http/
+    - tar -cvf app.tar api/
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    # Use this line for the first build
+    - docker build --network=host --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA --tag $CI_REGISTRY_IMAGE:latest .
+    # Use these 2 lines after the first build to speed up the build in the future
+    #- docker pull $CI_REGISTRY_IMAGE:latest
+    #- docker build --network=host --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA --tag $CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+    - docker push $CI_REGISTRY_IMAGE:latest
+

@@ -1,6 +1,6 @@
 # Django React Boilerplate
 
-This project will serve as a boilerplate for my projects for faster prototyping.  It implements an API using Django and Django Rest Framework to provide the backend, complete with authentication, LDAP support, and async ready.  It also implements a frontend using React, Redux-toolkit, and Material-UI.
+This project will serve as a letsvpn for my projects for faster prototyping.  It implements an API using Django and Django Rest Framework to provide the backend, complete with authentication, LDAP support, and async ready.  It also implements a frontend using React, Redux-toolkit, and Material-UI.
 
 Versions not up to date yet.
 

@@ -19,7 +19,7 @@ export default function PageHome() {
             header={'Boilerplate Homepage'}
             title={'Home'}
         >
-            <Typography variant={'body1'}>This is the homepage for your boilerplate app.  You can add more self contained pages under pages.</Typography>
+            <Typography variant={'body1'}>This is the homepage for your letsvpn app.  You can add more self contained pages under pages.</Typography>
 
         </FullPageLayout>
     );

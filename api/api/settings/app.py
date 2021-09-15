@@ -4,7 +4,6 @@
 import os
 
 from . import env
-from .auth.pam import AUTH_PAM_ENABLED
 
 # Required Django Settings
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,19 +20,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_better_admin_arrayfield',
     'rest_framework',
     'rest_framework.authtoken',
-    'social_django',
     # Register API as an app for registering multiple app profiles under one User model. Only uses apps.py and admin.py
     'api',
     # Register other apps here
-    'myapp',
+    'letsvpn',
     'colorfield',
 ]
-if AUTH_PAM_ENABLED:
-    INSTALLED_APPS.insert(8, 'django_pam')
-
 
 # Middleware
 MIDDLEWARE = [

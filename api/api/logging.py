@@ -26,7 +26,7 @@ class MultilineFormatter(logging.Formatter):
         return output
 
 
-def get_logger(name='boilerplate_app', level=logging.INFO):
+def get_logger(name='letsvpn_app', level=logging.INFO):
     logger = logging.getLogger(name)
 
     if DEBUG:

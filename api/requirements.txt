@@ -26,13 +26,6 @@ gunicorn
 # Django LDAP authentication (need to download wheel to use on Windows)
 django-auth-ldap
 
-# Django PAM authentication
-django-pam
-
-# Django social authentication
-social-auth-core
-social-auth-app-django
-
 # JWT authentication for DRF
 djangorestframework-simplejwt
 
@@ -97,4 +90,7 @@ django-colorfield
 
 # Library to make HTTP requests (sync only)
 requests
+
+# QR Code generation
+qrcode[pil]
 

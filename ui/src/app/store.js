@@ -26,7 +26,7 @@ const reducers = combineReducers({
 // If blacklist is enabled, everything but those slices will be persisted
 // whitelist and blacklist are mutually exclusive.  Only one should be enabled at a time.
 const persistConfig = {
-  key: 'boilerplate',
+  key: 'letsvpn',
   whitelist: ['auth'],
   //blacklist: [],
   storage,

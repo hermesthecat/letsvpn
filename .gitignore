@@ -14,3 +14,4 @@ api/staticfiles
 data
 api/data
 junk
+*.db

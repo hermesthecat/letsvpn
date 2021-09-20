@@ -12,7 +12,7 @@ import {
 import {connect} from "react-redux";
 import NavLeftAuth from "features/auth/nav";
 import NavLeftApp from "features/app/nav";
-import NavLeftPolls from "features/polls/nav";
+import NavLeftWGUsers from "features/wgusers/nav";
 import {grey} from "@material-ui/core/colors";
 
 
@@ -68,7 +68,7 @@ function NavLeft(props: any) {
             <List>
                 <NavLeftAuth/>
                 <NavLeftApp/>
-                <NavLeftPolls/>
+                <NavLeftWGUsers/>
             </List>
         </Drawer>
     );

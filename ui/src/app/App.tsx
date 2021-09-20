@@ -10,7 +10,7 @@ import {store} from './store'
 import {BrowserRouter as Router} from "react-router-dom";
 
 // This will appear in the titlebar of any page that uses FullPageLayout
-export const appName = 'Boilerplate';
+export const appName = 'LetsVPN';
 
 function App() {
     return (

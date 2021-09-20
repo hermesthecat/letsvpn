@@ -7,6 +7,10 @@ from api.settings import AUTH_USER_MODEL
 
 
 class UserSettings(UUIDModel):
+    class Meta:
+        verbose_name = 'User Settings'
+        verbose_name_plural = 'User Settings'
+
     user = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="usersettings")
 
     class Theme(models.TextChoices):

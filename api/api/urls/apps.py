@@ -3,7 +3,7 @@ from rest_framework_extensions.routers import ExtendedSimpleRouter
 from api.viewsets import UserViewSet
 
 # Import all your app's url routers here
-#from letsvpn.polls.urls import router as myapp_router
+from letsvpn.urls import router as letsvpn_router
 
 urlpatterns = []
 router = ExtendedSimpleRouter()
@@ -15,5 +15,5 @@ urlpatterns += router.urls
 
 
 # Register all your app's url routers here
-#urlpatterns += myapp_router.urls
+urlpatterns += letsvpn_router.urls
 

@@ -38,7 +38,6 @@ const authSlice = createSlice({
                 token: action.payload.refresh,
                 ...jwt_decode(action.payload.refresh),
             }
-            state.isAuthenticated = true;
         },
         refreshSuccess: (state, action) => {
             state.access = {
@@ -49,6 +48,10 @@ const authSlice = createSlice({
                 token: action.payload.refresh,
                 ...jwt_decode(action.payload.refresh),
             }
+        },
+        setUserSuccess: (state, action) => {
+            state.user = action.payload;
+            state.isAuthenticated = true;
         },
     },
 });
@@ -120,6 +123,7 @@ export const login = (username, password) => async (dispatch) => {
     }).then(res => {
         console.log(res);
         dispatch(loginSuccess(res.data));
+        dispatch(getUserInfo());
     }).catch(err => {
         console.error(err);
     });
@@ -129,10 +133,32 @@ export const logout = () => async (dispatch) => {
     dispatch(logoutSuccess())
 }
 
+export const getUserInfo = () => async (dispatch, getState) => {
+    console.log('getting user info')
+    if (!getState().auth.access.token)
+        throw {detail: 'Unable to fetch user data:  Not logged in.'}
+
+    //const user = dispatch(api({url: '/api/user/me/'}))
+    // Do request if not expired
+    const res = await axios({
+        url: '/api/user/me/',
+        headers: {Authorization: `Bearer ${getState().auth.access.token}`}
+    }).catch(err => {
+        console.error('Error fetching user info', err);
+        throw err;
+    });
+    const user = res.data;
+    //const user = await api({url: '/api/user/me/'});
+    console.log('api user', user);
+    dispatch(setUserSuccess(user));
+    return user;
+}
+
 export const {
     logoutSuccess,
     loginSuccess,
     refreshSuccess,
+    setUserSuccess,
 } = authSlice.actions
 
 export default authSlice.reducer

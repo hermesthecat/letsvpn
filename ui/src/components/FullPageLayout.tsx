@@ -56,7 +56,6 @@ export default function FullPageLayout(props: any) {
 
     const setPageTitle = () => {
         document.title = `${appName} · ${pageTitle}`;
-
     }
 
     useEffect(setPageTitle, [pageTitle]);

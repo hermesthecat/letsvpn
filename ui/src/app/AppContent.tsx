@@ -7,7 +7,7 @@ import clsx from "clsx";
 import {connect} from "react-redux";
 import AuthRoutes from "features/auth/routes";
 import AppRoutes from "features/app/routes";
-import PollsRoutes from "features/polls/routes";
+import WGUsersRoutes from "features/wgusers/routes";
 import FlatSwitch from "../components/FlatSwitch";
 import {grey} from "@material-ui/core/colors";
 
@@ -53,11 +53,10 @@ function AppContent(props: any) {
                 <FlatSwitch>
                     {AppRoutes}
                     {AuthRoutes}
-                    {PollsRoutes}
+                    {WGUsersRoutes}
                 </FlatSwitch>
             </Container>
         </main>
-
     );
 }
 

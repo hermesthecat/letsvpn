@@ -9,3 +9,4 @@ new.Dockerfile
 tmp
 venv
 *.db
+*.sqlite3

@@ -2,10 +2,10 @@ import React from 'react';
 import NavItem from "components/nav/NavLeft/NavItem";
 
 
-export default function NavLeftPolls() {
+export default function NavLeftWGUsers() {
     return (
         <>
-            <NavItem to={'/polls'} primary={'Polls'} />
+            <NavItem to={'/wgusers'} primary={'WireGuard Users'} />
         </>
     );
 

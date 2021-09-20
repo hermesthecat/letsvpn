@@ -44,6 +44,11 @@ function NavLeftAuth(props: any) {
         setLogoutOpen(!logoutOpen);
     }
 
+    const handleLogout = () => {
+        toggleDialog();
+        logout();
+    }
+
     if (isAuthenticated)
         return (
             <>
@@ -61,7 +66,7 @@ function NavLeftAuth(props: any) {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={logout} color="primary">
+                        <Button onClick={handleLogout} color="primary">
                             Logout
                         </Button>
                         <Button onClick={toggleDialog} color="primary" autoFocus>

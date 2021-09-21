@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import IntegrityError
 from django.db.models import URLField
 
+from api.logging import log
 from api.models.uuid import UUIDField, gen_uuid
 
 

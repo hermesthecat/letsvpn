@@ -36,7 +36,7 @@ class WireguardPeer(UUIDModel):
 
     # Not in config
     user = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
-    server = models.OneToOneField(WireguardServer, default=WireguardServer.get_default, on_delete=models.SET_DEFAULT, related_name='server')
+    server = models.ForeignKey(WireguardServer, default=WireguardServer.get_default, on_delete=models.SET_DEFAULT, related_name='server')
 
     # Generated
     private_key = models.CharField('Private Key', max_length=128, default=None, null=True, blank=True)
@@ -83,10 +83,7 @@ class WireguardPeer(UUIDModel):
                 if not WireguardPeer.objects.filter(address=self.address).first():
                     break
 
-        log.debug(f'address: {self.address}')
         self.config = self.generate_config()
-
-        # TODO: Generate random address in range of server subnet; see if object with that address exists and retry until found.
 
         """
         [Interface]

@@ -44,12 +44,13 @@ import ldap
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType, LDAPGroupQuery
 from environs import EnvValidationError
 
-from .. import env
+from .. import env, DEBUG
 from . import AUTHENTICATION_BACKENDS
 
 
 LDAP_SERVER_URI = env.str('LDAP_SERVER_URI', None)
 AUTH_LDAP_ENABLED = True if LDAP_SERVER_URI else False
+LDAP_AUTOPOPULATE = env.bool('LDAP_AUTOPOPULATE', not DEBUG)
 
 if AUTH_LDAP_ENABLED:
     if not LDAP_SERVER_URI.startswith('ldap://'):
@@ -66,6 +67,7 @@ if AUTH_LDAP_ENABLED:
     LDAP_GROUP_SEARCH_BASE = env.str('LDAP_GROUP_SEARCH_BASE', None)
     LDAP_GROUP_SEARCH_FILTER = env.str('LDAP_GROUP_SEARCH_FILTER', '(objectClass=groupOfNames)')
 
+    LDAP_ATTR_USERNAME = env.str('LDAP_ATTR_USERNAME', 'uid')
     LDAP_ATTR_FIRST_NAME = env.str('LDAP_ATTR_FIRST_NAME', 'givenName')
     LDAP_ATTR_LAST_NAME = env.str('LDAP_ATTR_LAST_NAME', 'sn')
     LDAP_ATTR_EMAIL = env.str('LDAP_ATTR_EMAIL', 'mail')

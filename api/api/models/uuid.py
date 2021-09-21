@@ -53,7 +53,8 @@ class UUIDModel(Model):
             try:
                 super().save(*args, **kwargs)
                 saved = True
-            except IntegrityError:
+            except IntegrityError as e:
+                log.debug(e)
                 if attempts > 5:
                     raise RuntimeError('Max attempts reached trying to save to database.')
                 attempts += 1

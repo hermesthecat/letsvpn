@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import {makeStyles} from "@material-ui/core/styles";
-import {Divider, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography} from "@material-ui/core";
+import makeStyles from '@mui/styles/makeStyles';
+import {Divider, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography} from "@mui/material";
 
 
 const useStyles = makeStyles(theme => ({

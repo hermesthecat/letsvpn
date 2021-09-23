@@ -1,17 +1,17 @@
 import React, {useEffect} from 'react';
-import {makeStyles} from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import makeStyles from '@mui/styles/makeStyles';
+import Container from "@mui/material/Container";
 import {appBarHeight} from "../app/theme";
 import PageHeader from "./PageHeader";
-import {Box, Paper} from "@material-ui/core";
+import {Box, Paper} from "@mui/material";
 import clsx from "clsx";
 import {appName} from "../app/App";
-import {grey} from "@material-ui/core/colors";
+import {grey} from "@mui/material/colors";
 
 
 const useStyles = makeStyles(theme => ({
     FullPageLayoutRoot: (props: any) => ({
-        minHeight: `calc(100vh - ${appBarHeight}px - ${theme.spacing(1)}px - 1px)`,
+        minHeight: `calc(100vh - ${appBarHeight}px - ${theme.spacing(1)} - 1px)`,
         display: 'flex',
     }),
     middle: {

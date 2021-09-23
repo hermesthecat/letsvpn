@@ -1,13 +1,13 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import makeStyles from '@mui/styles/makeStyles';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
 //import {useGlobal} from 'reactn';
 import {appBarHeight, discordColors, drawerWidth} from "../../../app/theme";
 import NavTopLeft from "./NavTopLeft";
 import clsx from "clsx";
 import NavTopRight from "./NavTopRight";
-import {blue} from "@material-ui/core/colors";
+import {blue} from "@mui/material/colors";
 import {connect} from "react-redux";
 
 

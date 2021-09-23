@@ -1,6 +1,7 @@
 import React from 'react';
-import {lighten, makeStyles} from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import { lighten } from "@mui/material/styles";
+import makeStyles from '@mui/styles/makeStyles';
+import Container from "@mui/material/Container";
 import {Switch} from "react-router-dom";
 import {appBarHeight, discordColors, drawerWidth} from "./theme";
 import clsx from "clsx";
@@ -9,7 +10,7 @@ import AuthRoutes from "features/auth/routes";
 import AppRoutes from "features/app/routes";
 import WGUsersRoutes from "features/wgusers/routes";
 import FlatSwitch from "../components/FlatSwitch";
-import {grey} from "@material-ui/core/colors";
+import {grey} from "@mui/material/colors";
 
 
 const useStyles = makeStyles(theme => ({
@@ -35,7 +36,7 @@ const useStyles = makeStyles(theme => ({
         }),
     },
     contentContainer: {
-        minHeight: `calc(100vh - ${appBarHeight}px - ${theme.spacing(2)}px)`,
+        minHeight: `calc(100vh - ${appBarHeight}px - ${theme.spacing(2)})`,
     }
 }));
 

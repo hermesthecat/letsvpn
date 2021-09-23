@@ -1,9 +1,9 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import Box from "@material-ui/core/Box";
+import makeStyles from '@mui/styles/makeStyles';
+import Box from "@mui/material/Box";
 //import {useAuth} from "../components/AuthProvider";
 //import copy from 'copy-to-clipboard';
-import Tooltip from "@material-ui/core/Tooltip";
+import Tooltip from "@mui/material/Tooltip";
 //import {useToasts} from "react-toast-notifications";
 
 

@@ -1,11 +1,12 @@
 import React from 'react';
-import {lighten, makeStyles} from '@material-ui/core/styles';
+import { lighten } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import {appBarHeight, drawerWidth} from "app/theme";
-import IconButton from "@material-ui/core/IconButton";
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
+import IconButton from "@mui/material/IconButton";
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
 import {
     toggleDrawer,
 } from "features/app/appSlice";
@@ -13,7 +14,7 @@ import {connect} from "react-redux";
 import NavLeftAuth from "features/auth/nav";
 import NavLeftApp from "features/app/nav";
 import NavLeftWGUsers from "features/wgusers/nav";
-import {grey} from "@material-ui/core/colors";
+import {grey} from "@mui/material/colors";
 
 
 const useStyles = makeStyles(theme => ({
@@ -62,7 +63,7 @@ function NavLeft(props: any) {
             }}
         >
             <div className={classes.drawerHeader}>
-                <IconButton onClick={toggleDrawer}><ChevronLeftIcon /></IconButton>
+                <IconButton onClick={toggleDrawer} size="large"><ChevronLeftIcon /></IconButton>
             </div>
             <Divider/>
             <List>

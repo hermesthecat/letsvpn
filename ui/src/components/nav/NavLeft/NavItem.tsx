@@ -1,14 +1,15 @@
 import React from 'react';
-import {darken, lighten, makeStyles} from '@material-ui/core/styles';
-import ListItem from "@material-ui/core/ListItem";
-import List from "@material-ui/core/List";
-import ListItemText from "@material-ui/core/ListItemText";
+import { darken, lighten } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import ListItem from "@mui/material/ListItem";
+import List from "@mui/material/List";
+import ListItemText from "@mui/material/ListItemText";
 import {Link} from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import clsx from "clsx";
-import {Collapse} from "@material-ui/core";
-import {ExpandLess, ExpandMore} from "@material-ui/icons";
-import {grey} from "@material-ui/core/colors";
+import {Collapse} from "@mui/material";
+import {ExpandLess, ExpandMore} from "@mui/icons-material";
+import {grey} from "@mui/material/colors";
 
 
 const useStyles = makeStyles(theme => ({

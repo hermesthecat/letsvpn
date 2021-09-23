@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import Box from "@material-ui/core/Box";
+import makeStyles from '@mui/styles/makeStyles';
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import Box from "@mui/material/Box";
 import PropTypes from "prop-types";
 import {discordColors} from "../app/theme";
 

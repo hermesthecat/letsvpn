@@ -1,5 +1,5 @@
-import {createMuiTheme} from '@material-ui/core/styles';
-import {blue} from "@material-ui/core/colors";
+import { createTheme, adaptV4Theme } from '@mui/material/styles';
+import {blue} from "@mui/material/colors";
 
 
 export const drawerWidth = 200;
@@ -25,9 +25,9 @@ export const discordColors = {
 
 
 // Create a theme instance.
-const theme = createMuiTheme({
+const theme = createTheme(adaptV4Theme({
     palette: {
-        type: 'dark',
+        mode: 'dark',
         primary: {
             main: blue[800],
             contrastThreshold: 3,
@@ -50,7 +50,7 @@ const theme = createMuiTheme({
     appBar: {
         height: appBarHeight,
     },
-});
+}));
 
 
 export default theme;

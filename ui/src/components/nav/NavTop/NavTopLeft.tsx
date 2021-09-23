@@ -1,8 +1,8 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import Box from "@material-ui/core/Box";
-import MenuIcon from '@material-ui/icons/Menu';
-import IconButton from "@material-ui/core/IconButton";
+import makeStyles from '@mui/styles/makeStyles';
+import Box from "@mui/material/Box";
+import MenuIcon from '@mui/icons-material/Menu';
+import IconButton from "@mui/material/IconButton";
 import {connect} from "react-redux";
 import { toggleDrawer } from "../../../features/app/appSlice";
 
@@ -39,7 +39,7 @@ function NavTopLeft(props: any) {
 
     return (
         <Box>
-            <IconButton onClick={toggleDrawer}>
+            <IconButton onClick={toggleDrawer} size="large">
                 <MenuIcon />
             </IconButton>
         </Box>

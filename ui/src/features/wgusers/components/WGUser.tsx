@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import {Divider, Grid, Paper, Typography} from "@material-ui/core";
+import {Divider, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography} from "@material-ui/core";
 
 
 const useStyles = makeStyles(theme => ({
@@ -26,6 +26,7 @@ const useStyles = makeStyles(theme => ({
         //height: 'auto',
         maxWidth: '100%',
         maxHeight: '100%',
+        width: 200,
         objectFit: 'contain',
         padding: theme.spacing(2),
     }
@@ -52,10 +53,26 @@ export default function WGUser(props: any) {
                 <Grid item xs={12} container spacing={0}>
                     <Grid item xs={12} md={4}><img src={profile.qr} className={classes.qr} /></Grid>
                     <Grid item container spacing={1} xs={12} md={8}>
-                        <Grid item xs={12}><b>Private Key:</b> {profile.private_key}</Grid>
-                        <Grid item xs={12}><b>Public Key:</b>  {profile.public_key}</Grid>
-                        <Grid item xs={12}><b>Allowed IPs:</b> {profile.allowed_ips}</Grid>
-                        <Grid item xs={12}><b>Server CIDR:</b> {profile.address}</Grid>
+                        <Table size={'small'}>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell>Private Key</TableCell>
+                                    <TableCell>{profile.private_key}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Public Key</TableCell>
+                                    <TableCell>{profile.public_key}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Allowed IPs</TableCell>
+                                    <TableCell>{profile.allowed_ips}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Server CIDR</TableCell>
+                                    <TableCell>{profile.address}</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
                     </Grid>
                 </Grid>
             </Grid>

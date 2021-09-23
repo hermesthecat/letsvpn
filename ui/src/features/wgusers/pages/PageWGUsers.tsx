@@ -18,7 +18,7 @@ function PageWGUsers(props: any) {
     const { setWGUsers } = props;
 
     const loadWGUsers = async () => {
-        const data = await api({url: '/api/wg/users/'});
+        const data = await api({url: '/api/wg/peers/'});
         console.log('data', data);
         setWGUsers(data);
     }

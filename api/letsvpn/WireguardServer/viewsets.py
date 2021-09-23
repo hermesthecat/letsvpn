@@ -3,13 +3,11 @@ from rest_framework import viewsets, mixins
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
-from django_auth_ldap.backend import LDAPBackend
 
 from api.logging import log
 from api.models import User
 from api.serializers import UserSerializer, UserPublicSerializer
-from api.settings import AUTH_USER_MODEL, LDAP_SERVER_URI, LDAP_BIND_DN, LDAP_BIND_PASS, LDAP_USER_SEARCH_BASE, \
-    LDAP_USER_SEARCH_FILTER, LDAP_ATTR_USERNAME, LDAP_ATTR_EMAIL, LDAP_ATTR_FIRST_NAME, LDAP_ATTR_LAST_NAME
+from api.settings.auth import *
 from .serializers import WireguardServerSerializer, WireguardServerSerializerPublic
 from .models import WireguardServer
 
@@ -25,30 +23,54 @@ class WireguardServerViewSet(
     queryset = WireguardServer.objects.all()
     serializer_class = WireguardServerSerializer
 
-    @action(methods=['GET'], detail=False)
+    @action(methods=['GET'], detail=False, permission_classes=[AllowAny])
     def test(self, request):
+        from django_auth_ldap.backend import LDAPBackend
+        backend = LDAPBackend()
         l = ldap.initialize(LDAP_SERVER_URI)
         l.protocol_version = ldap.VERSION3
         l.simple_bind(LDAP_BIND_DN, LDAP_BIND_PASS)
 
+        from django_auth_ldap.backend import LDAPBackend
+        log.info('Pre-populating users from LDAP...')
+        from django_auth_ldap.config import LDAPSearch
+        r = LDAPSearch(LDAP_USER_SEARCH_BASE, ldap.SCOPE_SUBTREE, LDAP_USER_SEARCH_FILTER)
+        log.debug(r)
+        result = r.execute(l)
+
+        user, created = backend.get_or_build_user('cclloyd', result[0])
+        #if user:
+        user = backend.populate_user('cclloyd')
+        log.debug(user)
+
+        return Response(result)
+
+
         search_filter = LDAP_USER_SEARCH_FILTER
 
         attributes = [
-            LDAP_ATTR_USERNAME,
-            LDAP_ATTR_EMAIL,
-            LDAP_ATTR_FIRST_NAME,
-            LDAP_ATTR_LAST_NAME,
+            '*'
+            #LDAP_ATTR_USERNAME,
+            #LDAP_ATTR_EMAIL,
+            #'memberOf',
+            #LDAP_ATTR_FIRST_NAME,
+            #LDAP_ATTR_LAST_NAME,
         ]
 
-        backend = LDAPBackend()
         results = l.search_s(LDAP_USER_SEARCH_BASE, ldap.SCOPE_SUBTREE, search_filter, attributes)
+        return Response(results)
         for query, u in results:
             username = u[LDAP_ATTR_USERNAME][0].decode('utf-8')
             user, created = backend.get_or_build_user(username, u)
             if created:
                 user.save()
-            user = backend.populate_user(username)
-            log.debug(f'Prepopulate: {user}')
+            log.debug(user)
+            log.debug(user.username)
+            log.debug(user.email)
+            backend.populate_user(username)
+            log.debug(f'Pre-populate: {user}, {user.email} END')
+            return Response(results)
+        log.info('Finished pre-populating users.')
 
         return Response(results)
 

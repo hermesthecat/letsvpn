@@ -31,5 +31,6 @@ LOGGING = {
             'propagate': True,
             'level': 'INFO',
         },
+        "django_auth_ldap": {"level": "DEBUG", "handlers": ["console"]}
     },
 }

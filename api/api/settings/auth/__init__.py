@@ -62,6 +62,7 @@ if AUTH_LDAP_ENABLED:
     LDAP_BIND_PASS = env.str('LDAP_BIND_PASS', None)
 
     LDAP_USER_SEARCH_BASE = env.str('LDAP_USER_SEARCH_BASE', None)
+    #LDAP_USER_SEARCH_FILTER = env.str('LDAP_USER_SEARCH_FILTER', '(uid=%(user)s)')
     LDAP_USER_SEARCH_FILTER = env.str('LDAP_USER_SEARCH_FILTER', '(uid=%(user)s)')
 
     LDAP_GROUP_SEARCH_BASE = env.str('LDAP_GROUP_SEARCH_BASE', None)

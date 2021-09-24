@@ -1,6 +1,5 @@
 import React from 'react';
 import { lighten } from '@mui/material/styles';
-import makeStyles from '@mui/styles/makeStyles';
 import {appBarHeight, drawerWidth} from "app/theme";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -15,18 +14,31 @@ import NavLeftAuth from "features/auth/nav";
 import NavLeftApp from "features/app/nav";
 import NavLeftWGUsers from "features/wgusers/nav";
 import {grey} from "@mui/material/colors";
+import {styled} from "@mui/material";
 
 
-const useStyles = makeStyles(theme => ({
-    root: {
+const PREFIX = 'NavLeft';
+
+const classes = {
+    root: `${PREFIX}-root`,
+    drawerPaper: `${PREFIX}-drawerPaper`,
+    drawerHeader: `${PREFIX}-drawerHeader`,
+    nested: `${PREFIX}-nested`,
+    link: `${PREFIX}-link`
+};
+
+const StyledDrawer = styled(Drawer)(({theme}: any) => ({
+    [`&.${classes.root}`]: {
         width: drawerWidth,
         flexShrink: 0,
     },
-    drawerPaper: {
+
+    [`& .${classes.drawerPaper}`]: {
         width: drawerWidth,
         backgroundColor: lighten(grey[900], 0.03),
     },
-    drawerHeader: {
+
+    [`& .${classes.drawerHeader}`]: {
         display: 'flex',
         alignItems: 'center',
         padding: theme.spacing(0, 1),
@@ -35,17 +47,19 @@ const useStyles = makeStyles(theme => ({
         height: appBarHeight,
         justifyContent: 'flex-end',
     },
-    nested: {
+
+    [`& .${classes.nested}`]: {
         paddingLeft: theme.spacing(4),
     },
-    link: {
+
+    [`& .${classes.link}`]: {
         color: 'inherit',
         textDecoration: 'none',
     }
 }));
 
 function NavLeft(props: any) {
-    const classes = useStyles();
+
 
     // Redux state
     const { drawerOpen } = props;
@@ -53,9 +67,9 @@ function NavLeft(props: any) {
     const { toggleDrawer } = props;
 
     return (
-        <Drawer
+        <StyledDrawer
             className={classes.root}
-            variant={window.innerWidth >= 960 ? "persistent" : "temporary"}
+            variant={'persistent'}
             anchor="left"
             open={drawerOpen}
             classes={{
@@ -71,7 +85,7 @@ function NavLeft(props: any) {
                 <NavLeftApp/>
                 <NavLeftWGUsers/>
             </List>
-        </Drawer>
+        </StyledDrawer>
     );
 }
 

@@ -4,12 +4,11 @@ import MaterialUIApp from "./MaterialUIApp";
 import { ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles";
 import theme from "./theme";
 import CssBaseline from "@mui/material/CssBaseline";
-//import {ToastProvider} from "react-toast-notifications";
 import { Provider } from 'react-redux'
 import {store} from './store'
 import {BrowserRouter as Router} from "react-router-dom";
 
-
+//@ts-ignore-next-line
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface DefaultTheme extends Theme {}

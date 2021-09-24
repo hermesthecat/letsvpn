@@ -1,32 +1,34 @@
 import React from 'react';
-import makeStyles from '@mui/styles/makeStyles';
 import Box from "@mui/material/Box";
-//import {useAuth} from "../components/AuthProvider";
-//import copy from 'copy-to-clipboard';
-import Tooltip from "@mui/material/Tooltip";
-//import {useToasts} from "react-toast-notifications";
+import {styled} from "@mui/material";
+const PREFIX = 'NavTopRight';
 
+const classes = {
+    root: `${PREFIX}-root`,
+    avatar: `${PREFIX}-avatar`
+};
 
-const useStyles = makeStyles(theme => ({
-    root: {},
-    avatar: {
+const StyledBox = styled(Box)(({theme}: any) => ({
+    [`&.${classes.root}`]: {},
+
+    [`& .${classes.avatar}`]: {
         width: 40,
         height: 'auto',
         borderRadius: '50%',
-    },
+    }
 }));
 
 
 export default function NavTopRight() {
-    const classes = useStyles();
+
 
     //const { isAuthenticated, user, localToken } = useAuth();
     const user = null;
     //const { addToast } = useToasts();
 
     return (
-        <Box className={classes.root}>
+        <StyledBox className={classes.root}>
             <div>Avatar</div>
-        </Box>
+        </StyledBox>
     );
 }

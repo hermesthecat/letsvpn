@@ -1,26 +1,35 @@
 import React from 'react';
 import { darken, lighten } from '@mui/material/styles';
-import makeStyles from '@mui/styles/makeStyles';
 import ListItem from "@mui/material/ListItem";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import {Link} from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import clsx from "clsx";
-import {Collapse} from "@mui/material";
+import {Collapse, styled} from "@mui/material";
 import {ExpandLess, ExpandMore} from "@mui/icons-material";
 import {grey} from "@mui/material/colors";
 
 
-const useStyles = makeStyles(theme => ({
-    root: {
+const PREFIX = 'NavItem';
+
+const classes = {
+    root: `${PREFIX}-root`,
+    nested: `${PREFIX}-nested`,
+    active: `${PREFIX}-active`
+};
+
+const StyledLink = styled(Link)(({theme}: any) => ({
+    [`&.${classes.root}`]: {
         color: 'inherit',
         textDecoration: 'none',
     },
-    nested: (props: any) => ({
-        paddingLeft: theme.spacing(2*props.level),
+
+    [`& .${classes.nested}`]: ({level}: any) => ({
+        paddingLeft: theme.spacing(2*level),
     }),
-    active: {
+
+    [`& .${classes.active}`]: {
         backgroundColor: darken(grey[900], 0.15),
         '&:hover': {
             backgroundColor: darken(grey[900], 0.15),
@@ -30,10 +39,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function NavItem(props: any) {
     const { to, primary, collapsible, path, children, level, exact, ...otherProps } = props;
-
-    const classes = useStyles({
-        level: level,
-    });
 
     const location = useLocation();
 
@@ -67,11 +72,11 @@ export default function NavItem(props: any) {
 
 
     return (
-        <Link to={to} className={classes.root}>
+        <StyledLink to={to} className={classes.root}>
             <ListItem button disableRipple={active} className={clsx(classes.nested, {
                 [classes.active]: active,
             })}><ListItemText primary={primary}/></ListItem>
-        </Link>
+        </StyledLink>
     );
 }
 

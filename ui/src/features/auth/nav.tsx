@@ -1,9 +1,9 @@
+// @ts-ignore
 import React, {useState} from 'react';
-import makeStyles from '@mui/styles/makeStyles';
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import {connect} from "react-redux";
-import {Box, Grid, TextField} from "@mui/material";
+import {Box, Grid, styled, TextField} from "@mui/material";
 import {login} from "features/auth/authSlice";
 import { useForm } from "react-hook-form";
 import {logout} from "./authSlice";
@@ -16,11 +16,17 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 
 
-const useStyles = makeStyles(theme => ({
-    root: {
+const PREFIX = 'nav';
+
+const classes = {
+    root: `${PREFIX}-root`
+};
+
+const StyledBox = styled(Box)(({theme}: any) => ({
+    [`&.${classes.root}`]: {
         padding: theme.spacing(0, 1),
         marginBottom: theme.spacing(1),
-    },
+    }
 }));
 
 type AccountFormData = {
@@ -29,7 +35,7 @@ type AccountFormData = {
 }
 
 function NavLeftAuth(props: any) {
-    const classes = useStyles();
+
     const { login, logout, isAuthenticated } = props;
 
     const { register, handleSubmit, reset } = useForm();
@@ -77,42 +83,46 @@ function NavLeftAuth(props: any) {
             </>
         );
     else
-        return (
-            <Box className={classes.root}>
-                <form id={'nav-login'} onSubmit={handleSubmit(handleLogin)}>
-                    <Grid container spacing={1}>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                size={'small'}
-                                placeholder={'Username'}
-                                name={'username'}
-                                variant={'outlined'}
-                                label={'Username'}
-                                inputRef={register}
-                                autoComplete={'off'}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                size={'small'}
-                                placeholder={'Password'}
-                                name={'password'}
-                                variant={'outlined'}
-                                label={'Password'}
-                                type={'password'}
-                                inputRef={register}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Button variant={'contained'} fullWidth color={'primary'} type={'submit'}>Login</Button>
-                        </Grid>
-                    </Grid>
-                </form>
-                <Divider />
-            </Box>
-        );
+        {
+            return (
+                        <Box sx={{ padding: 'theme.spacing(0, 1)', marginBottom: 'theme.spacing(1)' }}>
+                            <form id={'nav-login'} onSubmit={handleSubmit(handleLogin)}>
+                                <Grid container spacing={1}>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            fullWidth
+                                            size={'small'}
+                                            placeholder={'Username'}
+                                            name={'username'}
+                                            variant={'outlined'}
+                                            label={'Username'}
+                                            // @ts-ignore
+                                            inputRef={{...register('username')}}
+                                            autoComplete={'off'}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            fullWidth
+                                            size={'small'}
+                                            placeholder={'Password'}
+                                            name={'password'}
+                                            variant={'outlined'}
+                                            label={'Password'}
+                                            type={'password'}
+                                            // @ts-ignore
+                                            inputRef={{...register('password')}}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Button variant={'contained'} fullWidth color={'primary'} type={'submit'}>Login</Button>
+                                    </Grid>
+                                </Grid>
+                            </form>
+                            <Divider />
+                        </Box>
+                    );
+        }
 
 }
 

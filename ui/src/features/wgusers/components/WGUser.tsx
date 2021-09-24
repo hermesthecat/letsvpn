@@ -1,27 +1,51 @@
 import React, {useEffect} from 'react';
-import makeStyles from '@mui/styles/makeStyles';
-import {Divider, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography} from "@mui/material";
+import {
+    Divider,
+    Grid,
+    Paper,
+    styled,
+    Table,
+    TableBody,
+    TableCell, TableContainer,
+    TableHead,
+    TableRow,
+    Typography
+} from "@mui/material";
 
 
-const useStyles = makeStyles(theme => ({
-    root: {
+const PREFIX = 'WGUser';
+
+const classes = {
+    root: `${PREFIX}-root`,
+    userInfo: `${PREFIX}-userInfo`,
+    avatar: `${PREFIX}-avatar`,
+    username: `${PREFIX}-username`,
+    qr: `${PREFIX}-qr`
+};
+
+const StyledPaper = styled(Paper)(({theme}: any) => ({
+    [`&.${classes.root}`]: {
         width: '100%',
     },
-    userInfo: {
+
+    [`& .${classes.userInfo}`]: {
         display: 'flex',
         justifyContent: 'left',
         alignItems: 'center',
     },
-    avatar: {
+
+    [`& .${classes.avatar}`]: {
         width: '64px',
         height: 'auto',
         borderRadius: '50%',
         margin: theme.spacing(1),
     },
-    username: {
+
+    [`& .${classes.username}`]: {
 
     },
-    qr: {
+
+    [`& .${classes.qr}`]: {
         //width: 'calc(100%)',
         //height: 'auto',
         maxWidth: '100%',
@@ -33,50 +57,51 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function WGUser(props: any) {
-    const classes = useStyles();
 
-    const { profile } = props;
+
+    const { peer } = props;
 
     useEffect(() => {
     }, []);
 
     return (
-        <Paper className={classes.root}>
+        <StyledPaper className={classes.root}>
             <Grid container spacing={0}>
                 <Grid item xs={12} className={classes.userInfo}>
-                    <img src={profile.user.gravatar} className={classes.avatar}/>
-                    <Typography variant={'h4'} className={classes.username}>{profile.user.username}</Typography>
+                    <img src={peer.user.gravatar} className={classes.avatar}/>
+                    <Typography variant={'h4'} className={classes.username}>{peer.user.username}</Typography>
                 </Grid>
 
                 <Grid item xs={12}><Divider/></Grid>
 
                 <Grid item xs={12} container spacing={0}>
-                    <Grid item xs={12} md={4}><img src={profile.qr} className={classes.qr} /></Grid>
+                    <Grid item xs={12} md={4}><img src={peer.qr} className={classes.qr} /></Grid>
                     <Grid item container spacing={1} xs={12} md={8}>
+                        <TableContainer component={'div'}>
                         <Table size={'small'}>
                             <TableBody>
                                 <TableRow>
                                     <TableCell>Private Key</TableCell>
-                                    <TableCell>{profile.private_key}</TableCell>
+                                    <TableCell>{peer.private_key}</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Public Key</TableCell>
-                                    <TableCell>{profile.public_key}</TableCell>
+                                    <TableCell>{peer.public_key}</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Allowed IPs</TableCell>
-                                    <TableCell>{profile.allowed_ips}</TableCell>
+                                    <TableCell>{peer.allowed_ips}</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Server CIDR</TableCell>
-                                    <TableCell>{profile.address}</TableCell>
+                                    <TableCell>{peer.address}/{peer.server.subnet}</TableCell>
                                 </TableRow>
                             </TableBody>
-                        </Table>
+                        </Table></TableContainer>
                     </Grid>
                 </Grid>
             </Grid>
-        </Paper>
+        </StyledPaper>
     );
 
 }

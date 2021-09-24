@@ -1,48 +1,66 @@
 import React from 'react';
-import makeStyles from '@mui/styles/makeStyles';
 import Box from "@mui/material/Box";
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from "@mui/material/IconButton";
 import {connect} from "react-redux";
 import { toggleDrawer } from "../../../features/app/appSlice";
+import {styled} from "@mui/material";
 
-const useStyles = makeStyles(theme => ({
-    root: {},
-    navLink: {
+const PREFIX = 'NavTopLeft';
+
+const classes = {
+    root: `${PREFIX}-root`,
+    navLink: `${PREFIX}-navLink`,
+    menuContent: `${PREFIX}-menuContent`,
+    menuContentBox: `${PREFIX}-menuContentBox`,
+    dialogActions: `${PREFIX}-dialogActions`,
+    description: `${PREFIX}-description`,
+    hidden: `${PREFIX}-hidden`
+};
+
+const StyledBox = styled(Box)(({theme}: any) => ({
+    [`& .${classes.root}`]: {},
+
+    [`& .${classes.navLink}`]: {
         color: '#fff',
         textDecoration: 'none',
     },
-    menuContent: {
+
+    [`& .${classes.menuContent}`]: {
         padding: 0,
     },
-    menuContentBox: {
+
+    [`& .${classes.menuContentBox}`]: {
         padding: theme.spacing(2),
         minWidth: 600,
     },
-    dialogActions: {
+
+    [`& .${classes.dialogActions}`]: {
         display: 'flex',
         justifyContent: 'space-between',
     },
-    description: {
+
+    [`& .${classes.description}`]: {
         paddingTop: theme.spacing(4),
     },
-    hidden: {
+
+    [`& .${classes.hidden}`]: {
         display: 'none',
     }
 }));
 
 
 function NavTopLeft(props: any) {
-    const classes = useStyles();
+
 
     const { toggleDrawer } = props;
 
     return (
-        <Box>
+        <StyledBox>
             <IconButton onClick={toggleDrawer} size="large">
                 <MenuIcon />
             </IconButton>
-        </Box>
+        </StyledBox>
     );
 }
 

@@ -26,10 +26,17 @@ const theme = createTheme({
             4: '#36393e',
             5: '#42464d',
             6: '#484b52',
-        }
+        },
     },
     appBar: {
         height: appBarHeight,
+    },
+    mixins: {
+        center: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
     },
 });
 

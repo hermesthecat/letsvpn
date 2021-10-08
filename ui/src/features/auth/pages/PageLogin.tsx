@@ -37,7 +37,8 @@ function PageLogin(props: any) {
                             name={'username'}
                             variant={'outlined'}
                             label={'Username'}
-                            inputRef={register}
+                            // @ts-expect-error
+                            inputRef={{...register('username')}}
                             autoComplete={'off'}
                         />
                     </Grid>
@@ -50,7 +51,8 @@ function PageLogin(props: any) {
                             variant={'outlined'}
                             label={'Password'}
                             type={'password'}
-                            inputRef={register}
+                            // @ts-expect-error
+                            inputRef={{...register('password')}}
                         />
                     </Grid>
                     <Grid item xs={12}>

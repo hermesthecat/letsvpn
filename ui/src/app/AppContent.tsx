@@ -5,7 +5,8 @@ import clsx from "clsx";
 import {connect} from "react-redux";
 import AuthRoutes from "features/auth/routes";
 import AppRoutes from "features/app/routes";
-import WGUsersRoutes from "features/wgusers/routes";
+import WGPeerRoutes from "features/wgpeers/routes";
+import WGServerRoutes from "features/wgserver/routes";
 import FlatSwitch from "../components/FlatSwitch";
 import {grey} from "@mui/material/colors";
 import {styled} from "@mui/material";
@@ -64,7 +65,8 @@ function AppContent(props: any) {
                 <FlatSwitch>
                     {AppRoutes}
                     {AuthRoutes}
-                    {WGUsersRoutes}
+                    {WGPeerRoutes}
+                    {WGServerRoutes}
                 </FlatSwitch>
             </Container>
         </Root>

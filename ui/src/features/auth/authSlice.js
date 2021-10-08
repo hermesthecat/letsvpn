@@ -69,6 +69,21 @@ const refreshToken = async (token) => {
     return res.data;
 }
 
+export const newAPI = async (options = {headers: {}}) => {
+    api(options).then(data => {
+        if (data === undefined)
+            api(options).then(data => {
+                return data;
+            }).catch(e => {
+                console.error('Fatal error in new API', e);
+                throw e;
+            })
+        return data;
+    }).catch(e => {
+        console.error('Error in new API', e);
+    })
+}
+
 
 export const api = (options = {headers: {}}) => async (dispatch, getState) => {
     let state = getState().auth;
@@ -82,7 +97,7 @@ export const api = (options = {headers: {}}) => async (dispatch, getState) => {
             const new_token = await refreshToken(state.refresh.token);
             dispatch(refreshSuccess(new_token));
             dispatch(api(options))
-            return;
+
         }
 
         // Do request if not expired
@@ -110,23 +125,27 @@ export const api = (options = {headers: {}}) => async (dispatch, getState) => {
 
 
 export const login = (username, password) => async (dispatch) => {
-    axios({
-        method: 'POST',
-        url: '/api/auth/token/obtain/',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        data: {
-            username: username,
-            password: password,
-        }
-    }).then(res => {
-        console.log(res);
-        dispatch(loginSuccess(res.data));
-        dispatch(getUserInfo());
-    }).catch(err => {
-        console.error(err);
-    });
+    try {
+        axios({
+            method: 'POST',
+            url: '/api/auth/token/obtain/',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: {
+                username: username,
+                password: password,
+            }
+        }).then(res => {
+            dispatch(loginSuccess(res.data));
+            dispatch(getUserInfo());
+        }).catch(err => {
+            console.error('Error obtaining token', err);
+        });
+    }
+    catch (err) {
+        console.error('Fatal error logging in', err);
+    }
 }
 
 export const logout = () => async (dispatch) => {

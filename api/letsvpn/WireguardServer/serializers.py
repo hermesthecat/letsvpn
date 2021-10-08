@@ -11,5 +11,4 @@ class WireguardServerSerializer(serializers.ModelSerializer):
 class WireguardServerSerializerPublic(serializers.ModelSerializer):
     class Meta:
         model = WireguardServer
-        fields = '__all__'
-        exclude = ['private_key']
+        exclude = ['private_key', 'config']

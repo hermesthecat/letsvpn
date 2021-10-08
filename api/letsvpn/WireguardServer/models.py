@@ -15,6 +15,7 @@ class WireguardServer(UUIDModel):
 
     name = models.CharField('Interface Name', max_length=32, default='wg0', unique=True)
     default = models.BooleanField('Default Server', default=False, help_text='Default server when creating new peers.')
+    enabled = models.BooleanField('Enabled', default=True, help_text='Is this server enabled? (Will not start server when disabled)')
 
     # Generated
     wan = models.GenericIPAddressField('Public IPv4 Address', null=True, blank=True, help_text='AUTOFILLED: Public (WAN) IPv4 address for this server')

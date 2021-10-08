@@ -13,7 +13,7 @@ class WireguardServerAdmin(admin.ModelAdmin):
     )
     fieldsets = (
         ('Server Settings', {
-            'fields': ('name', 'default', 'port', 'public_key', 'private_key')
+            'fields': ('name', 'default', 'enabled', 'port', 'public_key', 'private_key')
         }),
         ('IPv4 Configuration', {
             'fields': ('wan', 'address', 'subnet')

@@ -14,13 +14,15 @@ import {
 
 import appReducer from 'features/app/appSlice'
 import authReducer from 'features/auth/authSlice'
-import wgUsersReducer from 'features/wgusers/wgUsersSlice'
+import wgPeersReducer from 'features/wgpeers/wgPeersSlice'
+import wgServerReducer from 'features/wgserver/wgServerSlice'
 
 
 // Add any other reducers you have here
 const reducers = combineReducers({
   app: appReducer,
-  wgusers: wgUsersReducer,
+  wgpeers: wgPeersReducer,
+  wgservers: wgServerReducer,
   auth: authReducer,
 })
 

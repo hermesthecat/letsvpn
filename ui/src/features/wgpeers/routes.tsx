@@ -1,11 +1,11 @@
 import React from "react";
-import PageWGUsers from "./pages/PageWGUsers";
+import PageWGPeers from "./pages/PageWGPeers";
 import ProtectedRoute from "components/ProtectedRoute";
 
 
 const PollsRoutes = (
     <>
-        <ProtectedRoute path='/wgusers' exact><PageWGUsers/></ProtectedRoute>
+        <ProtectedRoute path='/wgpeers' exact><PageWGPeers/></ProtectedRoute>
     </>
 )
 

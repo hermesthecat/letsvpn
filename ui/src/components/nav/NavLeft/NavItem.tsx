@@ -14,9 +14,9 @@ import {grey} from "@mui/material/colors";
 const PREFIX = 'NavItem';
 
 const classes = {
-    root: `${PREFIX}-root`,
-    nested: `${PREFIX}-nested`,
-    active: `${PREFIX}-active`
+    root: `${PREFIX}root`,
+    nested: `${PREFIX}nested`,
+    active: `${PREFIX}active`
 };
 
 const StyledLink = styled(Link)(({theme}: any) => ({
@@ -37,8 +37,27 @@ const StyledLink = styled(Link)(({theme}: any) => ({
     }
 }));
 
+const StyledA = styled('a')(({theme}: any) => ({
+    [`&.${classes.root}`]: {
+        color: 'inherit',
+        textDecoration: 'none',
+    },
+
+    [`& .${classes.nested}`]: ({level}: any) => ({
+        paddingLeft: theme.spacing(2*level),
+    }),
+
+    [`& .${classes.active}`]: {
+        backgroundColor: darken(grey[900], 0.15),
+        '&:hover': {
+            backgroundColor: darken(grey[900], 0.15),
+        }
+    }
+}));
+// TODO: Merge into one styled (styled react.fragment)
+
 export default function NavItem(props: any) {
-    const { to, primary, collapsible, path, children, level, exact, ...otherProps } = props;
+    const { to, primary, collapsible, path, children, level, exact, external } = props;
 
     const location = useLocation();
 
@@ -71,6 +90,16 @@ export default function NavItem(props: any) {
     }
 
 
+    if (external)
+        return (
+            <StyledA href={to} className={classes.root}>
+                <ListItem button disableRipple={active} className={clsx(classes.nested, {
+                    [classes.active]: active,
+                })}><ListItemText primary={primary}/></ListItem>
+            </StyledA>
+        );
+
+
     return (
         <StyledLink to={to} className={classes.root}>
             <ListItem button disableRipple={active} className={clsx(classes.nested, {
@@ -83,4 +112,5 @@ export default function NavItem(props: any) {
 NavItem.defaultProps = {
     level: 1,
     exact: false,
+    external: false,
 }

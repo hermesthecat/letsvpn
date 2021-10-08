@@ -12,33 +12,32 @@ import { styled } from '@mui/material/styles';
 const PREFIX = 'FullPageLayout';
 
 const classes = {
-    FullPageLayoutRoot: `${PREFIX}-FullPageLayoutRoot`,
-    middle: `${PREFIX}-middle`,
-    padding: `${PREFIX}-padding`,
-    FullPageLayoutBox: `${PREFIX}-FullPageLayoutBox`,
-    paper: `${PREFIX}-paper`
+    root: `${PREFIX}root`,
+    middle: `${PREFIX}middle`,
+    padding: `${PREFIX}padding`,
+    box: `${PREFIX}box`,
+    paper: `${PREFIX}paper`
 };
-
+/*
+const StyledContainer = styled(Container, {
+    shouldForwardProp: (prop) => prop === 'className'
+})(({theme}: any) => ({
+ */
 const StyledContainer = styled(Container)(({theme}: any) => ({
-    [`&.${classes.FullPageLayoutRoot}`]: {
+    [`& .${classes.root}`]: {
         minHeight: `calc(100vh - ${appBarHeight}px - ${theme.spacing(1)} - 1px)`,
-        display: 'flex',
     },
-
-    [`&.${classes.middle}`]: {
+    [`& .${classes.middle}`]: {
         alignItems: 'center',
     },
-
     [`& .${classes.padding}`]: ({padding}: any) => ({
         padding: theme.spacing(padding),
     }),
-
-    [`& .${classes.FullPageLayoutBox}`]: ({padding}: any) => ({
+    [`& .${classes.box}`]: ({padding}: any) => ({
         marginBottom: theme.spacing(1),
         padding: theme.spacing(padding),
         minWidth: '100%',
     }),
-
     [`& .${classes.paper}`]: ({padding}: any) => ({
         backgroundColor: grey[800],
         marginBottom: theme.spacing(1),
@@ -48,7 +47,7 @@ const StyledContainer = styled(Container)(({theme}: any) => ({
 }));
 
 export default function FullPageLayout(props: any) {
-    const {children, maxWidth, PageTitleProps, PaperProps, paper, middle, padding, header, title, className} = props;
+    const {children, maxWidth, PageTitleProps, PaperProps, paper, middle, padding, header, title, className, ...otherProps} = props;
 
     let pageTitle = '';
     let pageHeader = '';
@@ -73,30 +72,24 @@ export default function FullPageLayout(props: any) {
     const content =
         <>
             {props.header !== '' && <PageHeader title={pageHeader} {...PageTitleProps }/>}
-            {children}
+            <Box className={className}>
+                {children}
+            </Box>
         </>
 
-
-    if (paper)
-        return (
-            <StyledContainer maxWidth={maxWidth} padding={padding} fixed className={clsx(classes.FullPageLayoutRoot, {
-                [classes.middle]: middle,
-            })}>
-                <Paper className={clsx(classes.paper, classes.padding, className)} {...PaperProps} >
-                    {content}
-                </Paper>
-            </StyledContainer>
-        );
     return (
-        <Container maxWidth={maxWidth} fixed className={clsx(classes.FullPageLayoutRoot, {
+        <StyledContainer maxWidth={maxWidth} fixed className={clsx(classes.root, {
             [classes.middle]: middle,
         })}>
-            <Box className={clsx(classes.FullPageLayoutBox, classes.padding, className)}>
+            <Box
+                component={paper ? Paper : Box}
+                className={clsx(classes.box, classes.padding, {
+                    [classes.paper]: paper,
+                })}>
                 {content}
             </Box>
-        </Container>
-    )
-
+        </StyledContainer>
+    );
 }
 
 FullPageLayout.defaultProps = {

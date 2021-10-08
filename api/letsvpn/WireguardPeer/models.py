@@ -37,6 +37,7 @@ class WireguardPeer(UUIDModel):
     # Not in config
     user = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
     server = models.ForeignKey(WireguardServer, default=WireguardServer.get_default, on_delete=models.SET_DEFAULT, related_name='server')
+    enabled = models.BooleanField('Enabled', default=True, help_text='Is this peer enabled in the server config? (Will not be able to connect when disabled)')
 
     # Generated
     private_key = models.CharField('Private Key', max_length=128, default=None, null=True, blank=True)

@@ -81,7 +81,7 @@ function WGServerBlock(props: any) {
             setPeersLoading(false);
         });*/
         // TODO: Implement method
-        setPeersLoading(false)
+        setPeersLoading(false);
         setPeersError(false);
     }
 
@@ -91,11 +91,11 @@ function WGServerBlock(props: any) {
 
     return (
         <StyledWGServerBlock serverEnabled={server.enabled} className={classes.root}>
-            <Grid container spacing={1}>
-                <Grid item md={12} sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+            <Grid container spacing={0}>
+                <Grid item md={12} sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 1, pl: 2}}>
                     <Typography variant={'h3'}>{server.name}</Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center'}}>
-                        <span>STATUS:</span> <Tooltip title={server.enabled ? 'RUNNING' : 'STOPPED'} arrow><LensBlurIcon className={classes.statusIcon}/></Tooltip>
+                        <Tooltip title={server.enabled ? 'RUNNING' : 'STOPPED'} arrow><LensBlurIcon className={classes.statusIcon}/></Tooltip>
                         <Tooltip title={'Server Power Options'} arrow><IconButton><SettingsPowerIcon/></IconButton></Tooltip>
                     </Box>
                 </Grid>
@@ -115,8 +115,8 @@ function WGServerBlock(props: any) {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell><b>Public Key</b></TableCell>
-                                    <TableCell>
+                                    <TableCell sx={{borderBottom: 'none'}}><b>Public Key</b></TableCell>
+                                    <TableCell sx={{borderBottom: 'none'}}>
                                         <TextField fullWidth disabled value={server.public_key} variant={'outlined'} size={'small'}/>
                                     </TableCell>
                                 </TableRow>

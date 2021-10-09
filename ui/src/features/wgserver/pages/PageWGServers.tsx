@@ -17,6 +17,8 @@ import WGServerBlock from "../components/WGServerBlock";
 import {setWGServers} from "../wgServerSlice";
 import {WGServer} from "app/types";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import {useGetAllPeersQuery, useGetAllServersQuery} from "../../auth/apiSlice";
+import WGServerBlockSkeleton from "../components/WGServerBlockSkeleton";
 
 
 const PREFIX = 'PageWGServers';
@@ -33,7 +35,7 @@ const StyledFullPageLayout = styled(FullPageLayout)(({theme}: any) => ({
         alignItems: 'middle',
     },
     [`& .${classes.loadingBox}`]: {
-        display: 'flex',
+        //display: 'flex',
         justifyContent: 'center',
         alignItems: 'middle',
     },
@@ -42,70 +44,22 @@ const StyledFullPageLayout = styled(FullPageLayout)(({theme}: any) => ({
     },
 }));
 
-function PageWGServers(props: any) {
-
-
-    const { api, servers } = props;
-    const { setWGServers } = props;
-
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<boolean>(false);
-
-    const loadWGServers = async () => {
-         api({url: '/api/wg/servers/'}).then((data: WGServer[]) => {
-            console.debug('WireGuard servers data', data);
-            setWGServers(data);
-            setLoading(false);
-            setError(false);
-        }).catch((e: any) => {
-            console.error('Error fetching WireGuard servers', e);
-            setError(true);
-            setLoading(false);
-        });
-    }
-
-    useEffect(() => {
-        loadWGServers().then();
-    }, []);
+export default function PageWGServers(props: any) {
+    // @ts-ignore
+    const { data: servers, error, isLoading } = useGetAllServersQuery();
 
     return (
         <StyledFullPageLayout title={'Servers'} header={'WireGuard Servers'} className={classes.testcss}>
-                <SpeedDial ariaLabel={'DEBUG'} sx={{ position: 'absolute', bottom: 16, right: 16 }}>
-                    <SpeedDialAction onClick={() => {setLoading(!loading)}} tooltipTitle={'Loading'} icon={<div>L</div>}/>
-                    <SpeedDialAction onClick={() => {setError(!error)}} tooltipTitle={'Error'} icon={<div>Er</div>}/>
-                    <SpeedDialAction onClick={() => {setWGServers([])}} tooltipTitle={'Empty'} icon={<div>Em</div>}/>
-                </SpeedDial>
-
-                <Fade in={loading}><Box className={classes.loadingBox}><CircularProgress /></Box></Fade>
-                <Fade in={!loading && error} unmountOnExit><div>Error</div></Fade>
-                <Fade in={!loading && !error && servers.length === 0} unmountOnExit><div>Empty</div></Fade>
-                <Fade in={!loading && !error && servers.length > 0}>
+                <Fade in={isLoading} unmountOnExit><Box className={classes.loadingBox}>{[...Array(3)].map(n => <WGServerBlockSkeleton key={n}/>)}</Box></Fade>
+                <Fade in={(!isLoading && error) as boolean} unmountOnExit><div>Error</div></Fade>
+                <Fade in={!isLoading && !error && servers?.length === 0} unmountOnExit><div>Empty</div></Fade>
+                <Fade in={!isLoading && !error && servers?.length > 0}>
                     <Box>
                         <a href={'/admin/letsvpn/wireguardserver/add/'} target={'_BLANK'}><Button variant={'contained'} startIcon={<AddCircleIcon/>} sx={{m:1}}>New Peer</Button></a>
-                        {servers.map((s: WGServer) => <WGServerBlock server={s} key={s.id}/>)}
+                        {servers?.map((s: WGServer) => <WGServerBlock server={s} key={s.id}/>)}
                     </Box>
                 </Fade>
         </StyledFullPageLayout>
     );
 
 }
-
-PageWGServers.defaultProps = {
-    users: [],
-}
-
-const mapStateToProps = (state: any) => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    user: state.auth.user,
-    servers: state.wgservers.servers,
-})
-
-const mapDispatchToProps = {
-    setWGServers,
-    api,
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(PageWGServers)

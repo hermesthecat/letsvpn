@@ -14,6 +14,14 @@ export const wireguardApi = createApi({
         getAllPeers: builder.query({
             query: () => `wg/peers/`,
         }),
+        obtainRefreshToken: builder.mutation({
+            query: (formData) => ({
+                url: `auth/token/obtain/`,
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: formData,
+            }),
+        }),
     }),
 });
 
@@ -22,5 +30,9 @@ export const wireguardApi = createApi({
 export const {
     useGetServerByIDQuery, useGetAllServersQuery,
     useGetAllPeersQuery,
+    useObtainRefreshTokenLazyQuery,
+    useObtainRefreshTokenMutation,
 } = wireguardApi
+
+
 

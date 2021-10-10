@@ -1,11 +1,16 @@
 // @ts-ignore
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import {connect} from "react-redux";
-import {Box, Grid, styled, TextField} from "@mui/material";
+import {Box, CircularProgress, Fade, Grid, styled, TextField, Typography} from "@mui/material";
 import {login} from "features/auth/authSlice";
 import { Controller, useForm } from "react-hook-form";
+import {useObtainRefreshTokenLazyQuery, useObtainRefreshTokenMutation} from "../apiSlice";
+import LoadingButton from '@mui/lab/LoadingButton';
+import clsx from "clsx";
+import {toast, ToastContainer} from "react-toastify";
+import {useToasts} from "react-toast-notifications";
 
 
 type AccountFormData = {
@@ -16,6 +21,8 @@ type AccountFormData = {
 function NavAuthForm(props: any) {
 
     const { login } = props;
+    const [obtainRefreshToken, {isLoading, error}] = useObtainRefreshTokenMutation();
+    const { addToast } = useToasts();
 
     const { register, handleSubmit, control } = useForm({
         defaultValues: {
@@ -24,15 +31,30 @@ function NavAuthForm(props: any) {
         }});
 
     const handleLogin = (data: AccountFormData) => {
-        console.debug('Login data', data);
-        login(data.username, data.password);
+        // @ts-ignore
+        obtainRefreshToken(data).then(data => {
+            // @ts-ignore
+            if (data.error) {
+                console.error('Login error', data);
+                return
+            }
+            console.debug('Auth data', data);
+            // @ts-ignore
+            login(data.data);
+        })
     }
 
+    useEffect(() => {
+        if (error)
+            addToast('Error logging in.', {appearance: 'error'})
+    }, [error]);
+
     return (
-        <Box sx={{ padding: 'theme.spacing(0, 1)', marginBottom: 'theme.spacing(1)' }}>
+        <Box sx={{ px: 1, mb: 1 }}>
+
             <form id={'nav-login'} onSubmit={handleSubmit(handleLogin)}>
                 <Grid container spacing={1}>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sx={{pb: 0, mb: -0.5}}>
                         <Controller
                             name={"username"}
                             control={control}
@@ -54,7 +76,7 @@ function NavAuthForm(props: any) {
                         />
 
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sx={{pb: 0, mb: -0.5}}>
                         <Controller
                             name={"password"}
                             control={control}
@@ -76,9 +98,14 @@ function NavAuthForm(props: any) {
                             )}
                         />
                     </Grid>
-                    <Grid item xs={12}>
-                        <Button variant={'contained'} fullWidth color={'primary'} type={'submit'}>Login</Button>
+                    <Grid item xs={12} sx={{mb: 1}}>
+                        <LoadingButton variant={'contained'} fullWidth color={'primary'} type={'submit'} size={'small'} loading={isLoading} sx={{backgroundColor: error ? 'error.main' : 'primary.main'}}>Login</LoadingButton>
                     </Grid>
+                    <Fade in={error !== undefined} unmountOnExit>
+                        <Grid item xs={12} sx={{pt: 0, pl: 0}}>
+                            <Typography variant={'caption'} sx={{color: 'error.main', textAlign: 'center'}}>Error logging in.</Typography>
+                        </Grid>
+                    </Fade>
                 </Grid>
             </form>
             <Divider />

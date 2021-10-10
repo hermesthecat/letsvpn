@@ -1,11 +1,11 @@
 import React from 'react';
-import NavItem from "components/nav/NavLeft/NavItem";
+import ProtectedNavItem from "components/nav/NavLeft/ProtectedNavItem";
 
 
 export default function NavLeftWGPeers() {
     return (
         <>
-            <NavItem to={'/wgpeers'} primary={'WireGuard Peers'} />
+            <ProtectedNavItem to={'/wgpeers'} primary={'WireGuard Peers'} />
         </>
     );
 

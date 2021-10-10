@@ -27,7 +27,6 @@ class WireguardServerViewSet(
     serializer_class = WireguardServerSerializer
 
     def list(self, request):
-        sleep(1)
         user = request.user
 
         if user.is_staff or user.is_superuser:

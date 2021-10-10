@@ -44,7 +44,6 @@ class WireguardPeerViewSet(
         return data
 
     def list(self, request):
-        sleep(1)
         user = request.user
         peers = list()
         for peer in self.queryset:

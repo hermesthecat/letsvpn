@@ -124,28 +124,9 @@ export const api = (options = {headers: {}}) => async (dispatch, getState) => {
 }
 
 
-export const login = (username, password) => async (dispatch) => {
-    try {
-        axios({
-            method: 'POST',
-            url: '/api/auth/token/obtain/',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            data: {
-                username: username,
-                password: password,
-            }
-        }).then(res => {
-            dispatch(loginSuccess(res.data));
-            dispatch(getUserInfo());
-        }).catch(err => {
-            console.error('Error obtaining token', err);
-        });
-    }
-    catch (err) {
-        console.error('Fatal error logging in', err);
-    }
+export const login = (auth) => async (dispatch) => {
+    dispatch(loginSuccess(auth));
+    dispatch(getUserInfo());
 }
 
 export const logout = () => async (dispatch) => {

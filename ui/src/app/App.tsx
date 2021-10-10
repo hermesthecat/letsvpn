@@ -7,6 +7,10 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { Provider } from 'react-redux'
 import {store} from './store'
 import {BrowserRouter as Router} from "react-router-dom";
+import MUIToastContainer from "../components/MUIToastContainer";
+// @ts-ignore
+import {ToastProvider} from "react-toast-notifications";
+import MUIToast from "../components/MUIToast";
 
 //@ts-ignore-next-line
 declare module '@mui/styles/defaultTheme' {
@@ -25,7 +29,9 @@ function App() {
                 <ThemeProvider theme={theme}>
                     <Router>
                         <CssBaseline/>
-                        <MaterialUIApp/>
+                        <ToastProvider autoDismissTimeout={5000} autoDismiss={true} placement="top-center" components={{ ToastContainer: MUIToastContainer, Toast: MUIToast }}>
+                            <MaterialUIApp/>
+                        </ToastProvider>
                     </Router>
                 </ThemeProvider>
             </StyledEngineProvider>

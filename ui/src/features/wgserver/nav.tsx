@@ -1,11 +1,11 @@
 import React from 'react';
-import NavItem from "components/nav/NavLeft/NavItem";
+import ProtectedNavItem from "../../components/nav/NavLeft/ProtectedNavItem";
 
 
 export default function NavLeftWGServers() {
     return (
         <>
-            <NavItem to={'/wgservers'} primary={'WireGuard Servers'} />
+            <ProtectedNavItem to={'/wgservers'} primary={'WireGuard Servers'} />
         </>
     );
 

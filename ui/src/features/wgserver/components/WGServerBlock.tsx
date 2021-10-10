@@ -90,7 +90,7 @@ function WGServerBlock(props: any) {
     }, []);
 
     return (
-        <StyledWGServerBlock serverEnabled={server.enabled} className={classes.root}>
+        <StyledWGServerBlock serverEnabled={server.enabled} className={classes.root} elevation={6}>
             <Grid container spacing={0}>
                 <Grid item md={12} sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 1, pl: 2}}>
                     <Typography variant={'h3'}>{server.name}</Typography>

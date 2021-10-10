@@ -12,7 +12,7 @@ import {
     TableCell,
     TableContainer,
     TableHead,
-    TableRow
+    TableRow, Typography
 } from "@mui/material";
 import WGPeerRow from "../components/WGPeerRow";
 import {setWGPeers} from "../wgPeersSlice";
@@ -23,6 +23,10 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import clsx from "clsx";
 import {sleep} from "../../../lib/common";
+import ErrorIcon from '@mui/icons-material/Error';
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import RefreshIcon from '@mui/icons-material/Refresh';
+import WGPeerRowSkeleton from "../components/WGPeerRowSkeleton";
 
 
 const PREFIX = 'PageWGPeers';
@@ -63,8 +67,9 @@ function PageWGPeers(props: any) {
     const { setWGPeers } = props;
 
     // @ts-ignore
-    const { data: peers, error, isLoading } = useGetAllPeersQuery();
+    const { data: peers, error, isLoading, refetch, isFetching } = useGetAllPeersQuery();
     const [loading, setLoading] = useState(isLoading);
+    const isEmpty = true;
 /*<Fade in={isLoading} appear={false}>
 <Fade in={isLoading} addEndListener={() => {
                 console.log('loading', isLoading);
@@ -77,7 +82,13 @@ function PageWGPeers(props: any) {
             }} className={clsx({
                 [classes.hide]: !loading,
             })}>
+
+
+            <Fade in={!isLoading && !error && peers?.length === 0} unmountOnExit><div>Empty</div></Fade>
  */
+    const handleRefetch = () => {
+        refetch();
+    }
     return (
         <StyledFullPageLayout title={'Peers'} header={'WireGuard Peers'} className={classes.testcss}>
             <SpeedDial ariaLabel={'DEBUG'} sx={{ position: 'absolute', bottom: 16, right: 16 }}>
@@ -85,9 +96,8 @@ function PageWGPeers(props: any) {
                 <SpeedDialAction onClick={() => {/*setError(!error)*/}} tooltipTitle={'Error'} icon={<div>Er</div>}/>
                 <SpeedDialAction onClick={() => {setWGPeers([])}} tooltipTitle={'Empty'} icon={<div>Em</div>}/>
             </SpeedDial>
-            <div>{isLoading}</div>
 
-            <Fade timeout={195/2} in={isLoading} addEndListener={() => {
+            <Fade timeout={195/2} in={isFetching} addEndListener={() => {
                 console.log('loading', isLoading);
                 if (!isLoading) {
                     console.log('sleeping')
@@ -99,46 +109,29 @@ function PageWGPeers(props: any) {
                 [classes.hide]: !loading,
             })}>
 
-            <Box className={classes.loadingBox}>
+                <Box className={classes.loadingBox}>
                     <Button variant={'contained'} startIcon={<AddCircleIcon/>} sx={{m:1}} disabled>New Peer</Button>
-                    <TableContainer component={Paper} sx={{ p: 1 }}>
-                        <Table size={'small'}>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell />
-                                    <TableCell />
-                                    <TableCell>Username</TableCell>
-                                    <TableCell>Interface</TableCell>
-                                    <TableCell>IP Address</TableCell>
-                                    <TableCell>DNS</TableCell>
-                                    <TableCell>Tunneled IPs</TableCell>
-                                    <TableCell>Enabled</TableCell>
-                                    <TableCell />
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {[...Array(3)].map(n => <TableRow key={n}>
-                                    <TableCell sx={{px: 0.5, py: 1}}><IconButton disabled><KeyboardArrowDownIcon/></IconButton></TableCell>
-                                    <TableCell sx={{px: 0.5, py: 1}}><Skeleton variant={'circular'} animation={'wave'} sx={{width: 30, height: 30,}}/></TableCell>
-                                    <TableCell sx={{px: 0.5, py: 1}}><Skeleton className={classes.skeleton} variant={'rectangular'} height={30} animation={'wave'}/></TableCell>
-                                    <TableCell sx={{px: 0.5, py: 1}}><Skeleton className={classes.skeleton} variant={'rectangular'} height={30} animation={'wave'}/></TableCell>
-                                    <TableCell sx={{px: 0.5, py: 1}}><Skeleton className={classes.skeleton} variant={'rectangular'} height={30} animation={'wave'}/></TableCell>
-                                    <TableCell sx={{px: 0.5, py: 1}}><Skeleton className={classes.skeleton} variant={'rectangular'} height={30} animation={'wave'}/></TableCell>
-                                    <TableCell sx={{px: 0.5, py: 1}}><Skeleton className={classes.skeleton} variant={'rectangular'} height={30} animation={'wave'}/></TableCell>
-                                    <TableCell sx={{px: 0.5, py: 1}}><Skeleton className={classes.skeleton} variant={'rectangular'} height={30} animation={'wave'}/></TableCell>
-                                    <TableCell sx={{px: 0.5, py: 1}}><Switch checked={false} disabled/></TableCell>
-                                </TableRow>)}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                    <WGPeerRowSkeleton/>
                 </Box>
             </Fade>
-            <Fade in={!isLoading && error} unmountOnExit><div>Error</div></Fade>
-            <Fade in={!isLoading && !error && peers?.length === 0} unmountOnExit><div>Empty</div></Fade>
-            <Fade in={!isLoading && !error && peers?.length > 0}>
+
+            <Fade in={!isFetching && error !== undefined} unmountOnExit>
+                <Box sx={{minHeight: 200, textAlign: 'center', pt: 5}}>
+                    <ErrorIcon sx={{width: 50, height: 50, color: 'error.dark', opacity: 0.7}}/>
+                    <Typography variant={'h6'} sx={{color: 'error.dark', opacity: 0.7, my: 1}}>Encountered an error fetching your WireGuard peers.</Typography>
+                    <Button color={'inherit'} startIcon={<RefreshIcon/>} onClick={handleRefetch}>Refresh</Button>
+                </Box>
+            </Fade>
+            <Fade in={!isFetching && !error && peers?.length === 0} unmountOnExit>
+                <Box sx={{textAlign: 'center', mt: 2}}>
+                    <Typography variant={'h6'} sx={{mb: 1,}}>There are no peers added yet.</Typography>
+                    <a href={'/admin/letsvpn/wireguardpeer/add/'} target={'_BLANK'}><Button variant={'contained'} startIcon={<AddCircleIcon/>} sx={{m:1}}>New Peer <OpenInNewIcon sx={{transform: 'scale(0.7)'}}/></Button></a>
+                </Box>
+            </Fade>
+            <Fade in={!isFetching && !error && peers?.length > 0}>
                 <Box>
-                    <a href={'/admin/letsvpn/wireguardpeer/add/'} target={'_BLANK'}><Button variant={'contained'} startIcon={<AddCircleIcon/>} sx={{m:1}}>New Peer</Button></a>
-                    <TableContainer component={Paper} sx={{ p: 1 }}>
+                    <a href={'/admin/letsvpn/wireguardpeer/add/'} target={'_BLANK'}><Button variant={'contained'} startIcon={<AddCircleIcon/>} sx={{m:1}}>New Peer <OpenInNewIcon sx={{transform: 'scale(0.7)'}}/></Button></a>
+                    <TableContainer component={Paper} sx={{ p: 1 }} elevation={6}>
                         <Table size={'small'}>
                             <TableHead>
                                 <TableRow>

@@ -7,23 +7,37 @@ import {connect} from "react-redux";
 import { useHistory } from 'react-router-dom';
 import {useForm} from "react-hook-form";
 import {login} from "features/auth/authSlice";
+import {useObtainRefreshTokenMutation} from "../apiSlice";
+import {LoadingButton} from "@mui/lab";
 
 
 function PageLogin(props: any) {
     const { register, handleSubmit } = useForm();
     const history = useHistory();
+    const [obtainRefreshToken, {isLoading, error}] = useObtainRefreshTokenMutation();
 
-    const { isAuthenticated, login } = props;
+
+    const { isAuthenticated } = props;
 
     const handleLogin = (data: any) => {
-        login(data.username, data.password);
+        // @ts-ignore
+        obtainRefreshToken(data).then(data => {
+            // @ts-ignore
+            if (data.error) {
+                console.error('Login error', data);
+                return
+            }
+            console.debug('Auth data', data);
+            // @ts-ignore
+            login(data.data);
+        })
     }
 
     // Go to previous page once successfully logged in
     useEffect(() => {
         if (isAuthenticated)
             history.goBack();
-    }, [isAuthenticated])
+    }, [isAuthenticated]);
 
     return (
         <FullPageLayout title={'Login'} header={'Login'} maxWidth={'xs'} paper middle padding={4}>
@@ -56,7 +70,7 @@ function PageLogin(props: any) {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Button variant={'contained'} fullWidth color={'primary'} type={'submit'}>Login</Button>
+                        <LoadingButton variant={'contained'} fullWidth color={'primary'} type={'submit'} size={'small'} loading={isLoading} sx={{backgroundColor: error ? 'error.main' : 'primary.main'}}>Login</LoadingButton>
                     </Grid>
                 </Grid>
             </form>

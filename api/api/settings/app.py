@@ -54,3 +54,5 @@ MEDIA_URL = f'{MEDIA_HOSTNAME}/media/'
 CONTENT_TYPES = ['image']
 MAX_UPLOAD_SIZE = 41943040
 
+WG_COMMAND = env.list('WG_COMMAND', list('wg'))
+WGQ_COMMAND = env.list('WGQ_COMMAND', list('wg-quick'))

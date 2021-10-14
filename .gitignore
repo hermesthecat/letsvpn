@@ -16,3 +16,5 @@ api/data
 junk
 *.db
 *.sqlite3
+node_modules
+ui/node_modules

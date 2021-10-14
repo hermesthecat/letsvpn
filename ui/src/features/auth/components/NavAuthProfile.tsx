@@ -18,7 +18,6 @@ function NavAuthProfile(props: any) {
 
     const { logout, user } = props;
 
-
     const [logoutOpen, setLogoutOpen] = useState<boolean>(false);
 
     const toggleDialog = () => {

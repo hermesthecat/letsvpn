@@ -91,12 +91,6 @@ function PageWGPeers(props: any) {
     }
     return (
         <StyledFullPageLayout title={'Peers'} header={'WireGuard Peers'} className={classes.testcss}>
-            <SpeedDial ariaLabel={'DEBUG'} sx={{ position: 'absolute', bottom: 16, right: 16 }}>
-                <SpeedDialAction onClick={() => {/*setLoading(!loading)*/}} tooltipTitle={'Loading'} icon={<div>L</div>}/>
-                <SpeedDialAction onClick={() => {/*setError(!error)*/}} tooltipTitle={'Error'} icon={<div>Er</div>}/>
-                <SpeedDialAction onClick={() => {setWGPeers([])}} tooltipTitle={'Empty'} icon={<div>Em</div>}/>
-            </SpeedDial>
-
             <Fade timeout={195/2} in={isFetching} addEndListener={() => {
                 console.log('loading', isLoading);
                 if (!isLoading) {

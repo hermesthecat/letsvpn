@@ -72,7 +72,7 @@ export default function PageWGServers(props: any) {
             </Fade>
             <Fade in={!isFetching && error === undefined && servers?.length > 0}>
                 <Box>
-                    <a href={'/admin/letsvpn/wireguardserver/add/'} target={'_BLANK'}><Button variant={'contained'} startIcon={<AddCircleIcon/>} sx={{m:1}}>New Peer</Button></a>
+                    <a href={'/admin/letsvpn/wireguardserver/add/'} target={'_BLANK'}><Button variant={'contained'} startIcon={<AddCircleIcon/>} sx={{m:1}}>New Server</Button></a>
                     {servers?.map((s: WGServer) => <WGServerBlock server={s} key={s.id}/>)}
                 </Box>
             </Fade>

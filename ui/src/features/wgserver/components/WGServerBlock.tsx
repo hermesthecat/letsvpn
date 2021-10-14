@@ -22,6 +22,7 @@ import SettingsPowerIcon from '@mui/icons-material/SettingsPower';
 import LensBlurIcon from '@mui/icons-material/LensBlur';
 import isPropValid from '@emotion/is-prop-valid'
 import { Skeleton } from '@mui/material';
+import WGServerBlockInfo from "../../app/pages/WGServerBlockInfo";
 
 
 const PREFIX = 'WGServerBlock';
@@ -95,8 +96,7 @@ function WGServerBlock(props: any) {
                 <Grid item md={12} sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 1, pl: 2}}>
                     <Typography variant={'h3'}>{server.name}</Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center'}}>
-                        <Tooltip title={server.enabled ? 'RUNNING' : 'STOPPED'} arrow><LensBlurIcon className={classes.statusIcon}/></Tooltip>
-                        <Tooltip title={'Server Power Options'} arrow><IconButton><SettingsPowerIcon/></IconButton></Tooltip>
+                        <WGServerBlockInfo />
                     </Box>
                 </Grid>
                 <Grid item md={12}><Divider/></Grid>
@@ -128,11 +128,6 @@ function WGServerBlock(props: any) {
 
 
                 <Grid item md={6}>
-                    <SpeedDial ariaLabel={'DEBUG'} sx={{ position: 'absolute', bottom: 16, right: 100 }}>
-                        <SpeedDialAction onClick={() => {setPeersLoading(!peersLoading)}} tooltipTitle={'Loading'} icon={<div>L</div>}/>
-                        <SpeedDialAction onClick={() => {setPeersError(!peersError)}} tooltipTitle={'Error'} icon={<div>Er</div>}/>
-                        <SpeedDialAction onClick={() => {setPeers([])}} tooltipTitle={'Empty'} icon={<div>Em</div>}/>
-                    </SpeedDial>
                     {/*peersLoading && <> TODO: Add peers to server block
                         <Typography variant={'h3'}>Peers</Typography>
                         <Divider/>

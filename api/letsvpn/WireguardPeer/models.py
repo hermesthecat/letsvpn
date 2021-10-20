@@ -28,6 +28,22 @@ def dhcp(ip, subnet):
     hosts = list(network.hosts())
     return str(hosts[random.randint(0, len(hosts)-1)])
 
+def get_default_dns():
+    pass
+
+
+from netifaces import interfaces, ifaddresses, AF_INET
+import ipaddress
+
+def get_server_v4addresses():
+    ip_list = []
+    for interface in interfaces():
+        for link in ifaddresses(interface)[AF_INET]:
+            address = ipaddress.IPv4Address(link['addr'])
+            if address.is_private and not str(address).startswith('127') and not str(address).startswith('172'):
+                ip_list.append()
+    return ip_list
+
 
 class WireguardPeer(UUIDModel):
     class Meta:
@@ -48,7 +64,7 @@ class WireguardPeer(UUIDModel):
     # Server side
     address = models.GenericIPAddressField('IPv4 tunnel address', protocol='IPv4', null=True, blank=True, help_text='Local IPv4 address within VPN subnet this client will have (eg. 10.13.0.x)')
     address6 = models.GenericIPAddressField('IPv6 tunnel address', protocol='IPv6', null=True, blank=True, help_text='Local IPv6 address within VPN subnet this client will have')
-    dns = models.CharField('DNS (comma separated)', max_length=256, null=True, blank=True, help_text='DNS servers this client will use.')
+    dns = models.CharField('DNS (comma separated)', max_length=256, null=True, blank=True, help_text='DNS servers this client will use.',)
 
     # Peer side
     allowed_ips = models.CharField('Allowed IPs', max_length=128, default='0.0.0.0/0', help_text='IP addresses that will use the tunnel interface (defaults to all)')
@@ -59,15 +75,18 @@ class WireguardPeer(UUIDModel):
 
     def generate_config(self):
         # Build config
-        config = '[Interface]\n' \
-                 f'PrivateKey = {self.private_key}\n' \
-                 f'Address = {self.address}\n' \
-                 f'DNS = {self.dns}\n' \
-                 f'\n[Peer]\n' \
-                 f'PublicKey = {self.server.public_key}\n' \
-                 f'AllowedIPs = {self.allowed_ips}\n' \
-                 f'Endpoint = {self.server.wan}:{self.server.port}\n' \
-                 f'PersistentKeepalive = {self.keepalive}'
+        interface = f'[Interface]\n' \
+                    f'PrivateKey = {self.private_key}\n' \
+                    f'Address = {self.address}\n'
+        if self.dns and len(self.dns) > 0:
+            interface += f'DNS = {self.dns}\n' if self.dns else ''
+        peer = f'\n[Peer]\n' \
+               f'PublicKey = {self.server.public_key}\n' \
+               f'AllowedIPs = {self.allowed_ips}\n' \
+               f'Endpoint = {self.server.wan}:{self.server.port}\n'
+        if self.keepalive:
+             peer += f'PersistentKeepalive = {self.keepalive}'
+        config = interface + peer
         return config
 
     def save(self, *args, **kwargs):
@@ -83,6 +102,9 @@ class WireguardPeer(UUIDModel):
                 # Stop making addresses if not taken
                 if not WireguardPeer.objects.filter(address=self.address).first():
                     break
+
+        if not self.dns or len(self.dns) == 0:
+            self.dns = self.server.address
 
         self.config = self.generate_config()
 

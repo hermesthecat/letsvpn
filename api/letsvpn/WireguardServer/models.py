@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
+from api.logging import log
 from api.models import UUIDModel
 from api.utils import generate_keypair, get_external_ip
 
@@ -61,12 +62,14 @@ class WireguardServer(UUIDModel):
                  f'PrivateKey = {self.private_key}\n\n'
 
         peers = WireguardPeer.objects.filter(server=self)
+        log.debug('Peers')
+        log.debug(peers)
         for peer in peers:
             text = f'\n[Peer]\n' \
                  f'PublicKey = {self.public_key}\n' \
-                 f'AllowedIPs = {peer.address}/32\n' \
-                 f'Endpoint = {self.wan}:{self.port}\n' \
-                 f'PersistentKeepalive = {peer.keepalive}\n'
+                 f'AllowedIPs = {peer.address}/32\n'
+            if peer.keepalive:
+                text += f'PersistentKeepalive = {peer.keepalive}\n'
             config = f'{config}{text}'
         return config
 

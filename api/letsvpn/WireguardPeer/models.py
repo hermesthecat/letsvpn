@@ -61,7 +61,7 @@ class WireguardPeer(UUIDModel):
         # Build config
         config = '[Interface]\n' \
                  f'PrivateKey = {self.private_key}\n' \
-                 f'Address = 10.13.{self.address}\n' \
+                 f'Address = {self.address}\n' \
                  f'DNS = {self.dns}\n' \
                  f'\n[Peer]\n' \
                  f'PublicKey = {self.server.public_key}\n' \

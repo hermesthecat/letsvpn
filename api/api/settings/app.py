@@ -22,6 +22,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'drf_spectacular',
+    'drf_yasg',
     # Register API as an app for registering multiple app profiles under one User model. Only uses apps.py and admin.py
     'api',
     # Register other apps here
@@ -54,5 +56,38 @@ MEDIA_URL = f'{MEDIA_HOSTNAME}/media/'
 CONTENT_TYPES = ['image']
 MAX_UPLOAD_SIZE = 41943040
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+        #'rest_framework.permissions.IsAuthenticated',
+    ],
+    #'DEFAULT_RENDERER_CLASSES': (
+    #    'rest_framework.renderers.BrowsableAPIRenderer',
+    #    'rest_framework.renderers.JSONRenderer',
+    #    'rest_framework.renderers.CoreJSONRenderer',
+        #'rest_framework_swagger.renderers.SwaggerUIRenderer',
+        #'rest_framework_swagger.renderers.OpenAPIRenderer',
+    #),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'LetsVPN API',
+    'DESCRIPTION': 'LetsVPN API Full Schema',
+    'VERSION': '0.1.0',
+    # OTHER SETTINGS
+}
+
+
 WG_COMMAND = env.list('WG_COMMAND', list('wg'))
 WGQ_COMMAND = env.list('WGQ_COMMAND', list('wg-quick'))
+PI_PASSWORD = env.str('PI_PASSWORD', None)
+PI_IP = env.str('PI_IP', '127.0.0.1')
+
+
+

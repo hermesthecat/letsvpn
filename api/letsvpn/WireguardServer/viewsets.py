@@ -52,6 +52,11 @@ class WireguardServerViewSet(
     def start(self, request, pk=None):
         user = request.user
         server = WireguardServer.objects.get(pk=pk)
+
+        # Update config before starting
+        server.config = server.generate_config()
+        server.save()
+
         result = subprocess.run([*WGQ_COMMAND, 'up', server.name], stdout=subprocess.PIPE).stdout.decode('utf-8')
         return Response(result, status=200)
 
@@ -62,13 +67,35 @@ class WireguardServerViewSet(
         result = subprocess.run([*WGQ_COMMAND, 'down', server.name], stdout=subprocess.PIPE).stdout.decode('utf-8')
         return Response(result, status=200)
 
+    @action(methods=['GET'], detail=True, permission_classes=[IsAdminUser])
+    def restart(self, request, pk=None):
+        user = request.user
+        server = WireguardServer.objects.get(pk=pk)
 
-    @action(methods=['GET'], detail=True)
+        # Update config before starting
+        server.config = server.generate_config()
+        server.save()
+
+        all_result = ''
+        all_result += '\nSTOPPING SERVER\n'
+        all_result += subprocess.run([*WGQ_COMMAND, 'down', server.name], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        all_result += '\nSTARTING SERVER\n'
+        all_result += subprocess.run([*WGQ_COMMAND, 'up', server.name], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        return Response(all_result, status=200)
+
+    @action(methods=['GET'], detail=True, permission_classes=[AllowAny])
     def toggle(self, request, pk=None):
         user = request.user
         server = WireguardServer.objects.get(pk=pk)
-        if user.id != server.user.id and not user.is_superuser:
-            raise PermissionDenied('You can only edit your own profile if you are not an admin.')
         server.enabled = not server.enabled
         server.save()
-        return Response(WireguardServerViewSet.deep_populate(server, user))
+        return Response(WireguardServerSerializer(server, many=False).data)
+
+    @action(methods=['GET'], detail=True, permission_classes=[AllowAny])
+    def rebuild(self, request, pk=None):
+        user = request.user
+        server = WireguardServer.objects.get(pk=pk)
+
+        server.config = server.generate_config()
+        server.save()
+        return Response(WireguardServerSerializer(server, many=False).data)

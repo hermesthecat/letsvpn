@@ -17,7 +17,8 @@ django-cors-headers
 # WSGI HTTP server (useful for development, or if you don't plan on using any async features)
 gunicorn
 
-
+drf-yasg
+drf-spectacular
 
 ####################################################
 ## Django authentication (you can exclude any packages you don't plan on using)
@@ -69,6 +70,12 @@ asyncio
 
 # Async HTTP library for making requests in an async environment
 aiohttp
+
+
+####################################################
+## PiHole ad-blocking services
+####################################################
+PiHole-api
 
 
 

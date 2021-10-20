@@ -26,6 +26,9 @@ def delete_settings():
     pass
 
 
+def get_settings():
+    return GlobalSettings.objects.all().first()
+
 class GlobalSettings(UUIDModel):
     class Meta:
         verbose_name = 'LetsVPN Settings'

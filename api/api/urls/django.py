@@ -27,16 +27,3 @@ urlpatterns += router.urls
 urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)
 
 
-# TODO: Is this needed?
-# Add react urls
-react_urls = [
-    re_path(r'^options/?$', index),
-    re_path(r'^settings/?$', index),
-    re_path(r'^login/?$', index),
-    re_path(r'^register/?$', index),
-]
-
-if not DEBUG:
-    urlpatterns += react_urls
-
-

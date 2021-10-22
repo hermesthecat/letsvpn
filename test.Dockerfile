@@ -14,7 +14,7 @@ ADD api/requirements.txt /app/
 RUN set -ex \
     && RUN_DEPS=" \
         wireguard \
-        curl
+        curl \
     " \
     && apt-get update && apt-get install -y --no-install-recommends $RUN_DEPS \
     && rm -rf /var/lib/apt/lists/*

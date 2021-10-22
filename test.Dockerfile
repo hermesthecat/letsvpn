@@ -5,7 +5,7 @@ ARG APP_USER=abc
 RUN groupadd -r ${APP_USER} && useradd --no-log-init -r -g ${APP_USER} ${APP_USER}
 
 WORKDIR /app
-ENV PYTHONUNBUFFERED=1
+ENV PYTHONUNBUFFERED=1 TERM=xterm
 EXPOSE 80
 EXPOSE 8080
 
@@ -19,5 +19,5 @@ RUN set -ex \
     && apt-get update && apt-get install -y --no-install-recommends $RUN_DEPS \
     && rm -rf /var/lib/apt/lists/*
 
-#RUN curl -sSL https://install.pi-hole.net | bash
+RUN curl -sSL https://install.pi-hole.net | bash
 

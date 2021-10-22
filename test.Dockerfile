@@ -19,5 +19,5 @@ RUN set -ex \
     && apt-get update && apt-get install -y --no-install-recommends $RUN_DEPS \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sSL https://install.pi-hole.net | bash
+#RUN curl -sSL https://install.pi-hole.net | bash
 

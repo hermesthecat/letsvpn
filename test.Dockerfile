@@ -23,19 +23,17 @@ RUN set -ex \
         libpq-dev \
         libssl-dev \
         libffi-dev \
-        python3 \
-        python3-pip \
-        python3-wheel \
-        python3-setuptools \
+        python3 python3-pip python3-wheel python3-setuptools \
+        zlib1g zlib1g-dev \
     " \
     && RUN_DEPS=" \
         postgresql-client \
         nginx \
-        python3 \
-        python3-pip \
+        python3 python3-pip \
         wireguard \
         gunicorn \
         curl \
+        zlib1g-dev libjpeg-dev libpng-dev \
     " \
     && apt-get update && apt-get install -y $BUILD_DEPS \
     && pip3 install --no-cache-dir --default-timeout=100000 -r /app/requirements.txt \

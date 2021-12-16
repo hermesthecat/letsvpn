@@ -1,0 +1,12 @@
+#!/usr/bin/with-contenv sh
+
+# Run with user root pid 1.
+# exec nginx;
+
+# Run with user www-data.
+s6-echo "Starting nginx"
+#exec sleep 100000;
+#exec s6-setuidgid www-data sleep 100000;
+exec nginx;
+#exec s6-setuidgid www-data nginx;
+#nginx

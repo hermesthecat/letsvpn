@@ -60,7 +60,7 @@ build_node:
   #  GIT_SUBMODULE_STRATEGY: recursive
   artifacts:
     paths:
-      - /builds/cclloyd/django-react-letsvpn/http
+      - /builds/cclloyd/letsvpn/http
   cache:
     key: "node_modules"
     paths:

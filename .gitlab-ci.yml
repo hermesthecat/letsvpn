@@ -60,7 +60,7 @@ build_node:
   #  GIT_SUBMODULE_STRATEGY: recursive
   artifacts:
     paths:
-      - /builds/cclloyd/letsvpn/http
+      - http
   cache:
     key: "node_modules"
     paths:

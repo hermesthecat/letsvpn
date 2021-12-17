@@ -24,7 +24,7 @@ RUN set -ex \
         libssl-dev \
         libffi-dev \
         python3 python3-pip python3-wheel python3-setuptools \
-        zlib1g zlib1g-dev \
+        zlib1g-dev libjpeg-dev libpng-dev \
     " \
     && RUN_DEPS=" \
         postgresql-client \

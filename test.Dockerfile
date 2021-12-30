@@ -29,7 +29,7 @@ RUN set -ex \
     && RUN_DEPS=" \
         postgresql-client \
         nginx \
-        python3 python3-pip \
+        python3 python3-pip python3-setuptools python3-wheel \
         wireguard \
         gunicorn \
         curl \

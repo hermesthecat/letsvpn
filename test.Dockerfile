@@ -1,4 +1,4 @@
-FROM cr.cclloyd.com/letsvpn:test-base
+FROM cr.cclloyd.com/cclloyd/letsvpn:test-base
 
 # Copy Django app to work directory
 ADD app.tar /app/

@@ -17,7 +17,7 @@ variables:
 build_test_base:
   stage: Build Prerequisites
   only:
-    - ci
+    - test
   image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
@@ -54,7 +54,7 @@ build_node:
   only:
     - staging
     - production
-    - ci
+    - test
   image: node:15.5.0  # previously 14.8.0
   # Required if you separate the UI and backend repo
   #variables:

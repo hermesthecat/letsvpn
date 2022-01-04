@@ -48,7 +48,7 @@ RUN cd /usr/local/bin \
 	&& ln -s python3 python \
 	&& ln -s python3-config python-config \
 	&& ln -s pip3 pip \
-    && ln -s gunicorn3 gunicorn
+#    && ln -s gunicorn3 gunicorn
 
 # Copy config files for nginx and s6
 COPY debian-root/ /

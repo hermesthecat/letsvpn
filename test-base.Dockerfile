@@ -42,12 +42,10 @@ RUN set -ex \
     && rm -rf /var/lib/apt/lists/*
 
 # Create useful aliases for python stuff
-RUN cd /usr/local/bin \
-	&& ln -s idle3 idle \
+RUN cd /usr/bin \
 	&& ln -s pydoc3 pydoc \
 	&& ln -s python3 python \
-	&& ln -s python3-config python-config \
-	&& ln -s pip3 pip \
+	#&& ln -s pip3 pip \
 #    && ln -s gunicorn3 gunicorn
 
 # Copy config files for nginx and s6

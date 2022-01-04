@@ -18,10 +18,8 @@ RUN set -ex \
         build-essential \
         gcc \
         python3-dev \
-        libsasl2-dev \
-        libldap2-dev \
+        libsasl2-dev libldap2-dev libssl-dev \
         libpq-dev \
-        libssl-dev \
         libffi-dev \
         python3 python3-pip python3-wheel python3-setuptools \
         zlib1g-dev libjpeg-dev libpng-dev \
@@ -29,7 +27,8 @@ RUN set -ex \
     && RUN_DEPS=" \
         postgresql-client \
         nginx \
-        python3 python3-pip python3-setuptools python3-wheel \
+        libsasl2-dev libldap2-dev libssl-dev python3-dev \
+        python3 python3-pip python3-setuptools python3-wheel python3-ldap \
         wireguard \
         gunicorn3 \
         curl \
@@ -45,6 +44,7 @@ RUN set -ex \
 RUN cd /usr/bin \
 	&& ln -s pydoc3 pydoc \
 	&& ln -s python3 python
+
 	#&& ln -s pip3 pip \
 #    && ln -s gunicorn3 gunicorn
 

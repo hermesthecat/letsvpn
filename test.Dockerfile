@@ -1,5 +1,7 @@
 FROM cr.cclloyd.com/cclloyd/letsvpn:test-base
 
+ENV PYTHONPATH "${PYTHONPATH}:/app/api"
+
 # Copy Django app to work directory
 ADD app.tar /app/
 

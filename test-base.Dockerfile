@@ -31,7 +31,7 @@ RUN set -ex \
         nginx \
         python3 python3-pip python3-setuptools python3-wheel \
         wireguard \
-        gunicorn \
+        gunicorn3 \
         curl \
         zlib1g-dev libjpeg-dev libpng-dev \
     " \

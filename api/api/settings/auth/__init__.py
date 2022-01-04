@@ -34,7 +34,6 @@ from django_auth_ldap.config import LDAPSearch, GroupOfNamesType, LDAPGroupQuery
 from environs import EnvValidationError
 
 from .. import env, DEBUG
-from . import AUTHENTICATION_BACKENDS
 
 
 LDAP_SERVER_URI = env.str('LDAP_SERVER_URI', None)

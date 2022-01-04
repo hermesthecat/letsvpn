@@ -11,6 +11,7 @@ tmp
 download
 api/uploads
 api/staticfiles
+api/api/staticfiles
 data
 api/data
 junk

@@ -10,3 +10,11 @@ tmp
 venv
 *.db
 *.sqlite3
+staticfiles
+api/staticfiles
+api/api/staticfiles
+ui/node_modules
+ui/build
+ui/.idea
+ui/yarn-error.log
+ui/.eslintcache

@@ -41,34 +41,14 @@ RUN set -ex \
     && apt-get update && apt-get install -y --no-install-recommends $RUN_DEPS \
     && rm -rf /var/lib/apt/lists/*
 
-
-#RUN set -ex \
-#    && RUN_DEPS=" \
-#        wireguard \
-#        nginx \
-#        curl \
-#        build-essential \
-#        gcc \
-#        python3-dev \
-#        libsasl2-dev \
-#        libldap2-dev \
-#        libpq-dev \
-#        libssl-dev \
-#        libffi-dev \
-#        python3 \
-#        python3-pip \
-#        python3-wheel \
-#        python3-setuptools \
-#    " \
-#    && apt-get update && apt-get install -y --no-install-recommends $RUN_DEPS \
-#    && rm -rf /var/lib/apt/lists/*
-
-# Copy useful aliases for python
+# Create useful aliases for python stuff
 RUN cd /usr/local/bin \
 	&& ln -s idle3 idle \
 	&& ln -s pydoc3 pydoc \
 	&& ln -s python3 python \
-	&& ln -s python3-config python-config
+	&& ln -s python3-config python-config \
+	&& ln -s pip3 pip \
+    && ln -s gunicorn3 gunicorn
 
 # Copy config files for nginx and s6
 COPY debian-root/ /

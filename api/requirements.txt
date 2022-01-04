@@ -101,3 +101,5 @@ requests
 # QR Code generation
 qrcode[pil]
 
+
+six

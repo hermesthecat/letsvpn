@@ -39,14 +39,6 @@ build_test_image:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(echo -n ${CI_REGISTRY_USER}:${CI_REGISTRY_PASSWORD} | base64)\"}}}" > /kaniko/.docker/config.json
     #- /kaniko/executor --cache=true --cache-ttl=24h --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/test.Dockerfile --destination $CI_REGISTRY_IMAGE:test-$CI_COMMIT_SHORT_SHA --destination $CI_REGISTRY_IMAGE:test
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/test.Dockerfile --destination $CI_REGISTRY_IMAGE:test-$CI_COMMIT_SHORT_SHA --destination $CI_REGISTRY_IMAGE:test
-    #- docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    # Use this line for the first build
-    #- docker build --network=host --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA --tag $CI_REGISTRY_IMAGE:latest .
-    # Use these 2 lines after the first build to speed up the build in the future
-    #- docker pull $CI_REGISTRY_IMAGE:latest
-    #- docker build --network=host --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA --tag $CI_REGISTRY_IMAGE:latest .
-    #- docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
-    #- docker push $CI_REGISTRY_IMAGE:latest
 
 
 build_node:
@@ -55,10 +47,7 @@ build_node:
     - staging
     - production
     - ci
-  image: node:15.5.0  # previously 14.8.0
-  # Required if you separate the UI and backend repo
-  #variables:
-  #  GIT_SUBMODULE_STRATEGY: recursive
+  image: node:15.5.0
   artifacts:
     paths:
       - http

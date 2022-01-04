@@ -44,7 +44,7 @@ RUN set -ex \
 # Create useful aliases for python stuff
 RUN cd /usr/bin \
 	&& ln -s pydoc3 pydoc \
-	&& ln -s python3 python \
+	&& ln -s python3 python
 	#&& ln -s pip3 pip \
 #    && ln -s gunicorn3 gunicorn
 

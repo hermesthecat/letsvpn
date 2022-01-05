@@ -28,7 +28,7 @@ RUN set -ex \
         postgresql-client \
         nginx \
         libsasl2-dev libldap2-dev libssl-dev python3-dev \
-        python3 python3-pip python3-setuptools python3-wheel python3-ldap \
+        python3 python3-pip python3-setuptools python3-wheel python3-ldap python3-six \
         wireguard \
         gunicorn3 \
         curl \

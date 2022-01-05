@@ -48,6 +48,9 @@ build_node:
     - production
     - ci
   image: node:15.5.0
+  rules:
+    - changes:
+        - ui/*
   artifacts:
     paths:
       - http

@@ -29,7 +29,7 @@ if DB_HOST:
 else:
     DATABASES = {
         'default': {
-            'ENGINE': DB_TYPE,
+            'ENGINE': f'django.db.backends.{DB_TYPE}',
             'NAME': DB_NAME,
         }
     }

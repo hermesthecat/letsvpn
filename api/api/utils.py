@@ -1,5 +1,5 @@
 import subprocess
-import urllib
+import urllib.request
 
 from api.logging import log
 
@@ -20,4 +20,5 @@ def generate_keypair():
 def get_external_ip():
     EXTERNAL_IPV4 = urllib.request.urlopen('https://ipv4.icanhazip.com/').read().decode('utf-8').strip()
     EXTERNAL_IPV6 = urllib.request.urlopen('https://ipv6.icanhazip.com/').read().decode('utf-8').strip()
+    # TODO: this isn't working in staging.  Switch to requests library???
     return EXTERNAL_IPV4, EXTERNAL_IPV6

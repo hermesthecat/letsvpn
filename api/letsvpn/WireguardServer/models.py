@@ -9,6 +9,24 @@ from api.models import UUIDModel
 from api.utils import generate_keypair, get_external_ip
 
 
+def create_default_server(apps, schema_editor):
+    """
+    @param apps The installed apps this migration references
+    @param schema_editor The current schema this migration references
+    """
+    WireguardServer = apps.get_model('letsvpn', 'WireguardServer')
+
+    db_alias = schema_editor.connection.alias
+    WireguardServer.objects.using(db_alias).bulk_create([WireguardServer()])
+
+
+def delete_default_server():
+    """
+    This function doesn't need to do anything, since reversing this migration would drop the table.
+    """
+    pass
+
+
 class WireguardServer(UUIDModel):
     class Meta:
         verbose_name = 'WireGuard Server'

@@ -56,6 +56,7 @@ MEDIA_URL = f'{MEDIA_HOSTNAME}/media/'
 CONTENT_TYPES = ['image']
 MAX_UPLOAD_SIZE = 41943040
 
+DEFAULT_PERMISSION_CLASS = env.str('DEFAULT_PERMISSION_CLASS', 'rest_framework.permissions.IsAuthenticated')
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
@@ -63,7 +64,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
+        DEFAULT_PERMISSION_CLASS,
         #'rest_framework.permissions.IsAuthenticated',
     ],
     #'DEFAULT_RENDERER_CLASSES': (

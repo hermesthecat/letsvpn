@@ -1,17 +1,10 @@
-from time import sleep
 import subprocess
-import ldap
 from rest_framework import viewsets, mixins
-from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
-from api.logging import log
-from api.models import User
-from api.serializers import UserSerializer, UserPublicSerializer
 from api.settings import WG_COMMAND, WGQ_COMMAND
-from api.settings.auth import *
 from .serializers import WireguardServerSerializer, WireguardServerSerializerPublic
 from .models import WireguardServer
 
@@ -29,6 +22,8 @@ class WireguardServerViewSet(
 
     def list(self, request):
         user = request.user
+
+        WireguardServer.get_default()
 
         if user.is_staff or user.is_superuser:
             Serializer = WireguardServerSerializer

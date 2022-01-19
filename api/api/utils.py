@@ -1,5 +1,7 @@
 import subprocess
 import urllib.request
+import requests
+
 
 from api.logging import log
 
@@ -18,7 +20,7 @@ def generate_keypair():
 
 
 def get_external_ip():
-    EXTERNAL_IPV4 = urllib.request.urlopen('https://ipv4.icanhazip.com/').read().decode('utf-8').strip()
-    EXTERNAL_IPV6 = urllib.request.urlopen('https://ipv6.icanhazip.com/').read().decode('utf-8').strip()
-    # TODO: this isn't working in staging.  Switch to requests library???
+    # TODO: requests doesn't work in asyncio
+    EXTERNAL_IPV4 = requests.get('https://ipv4.icanhazip.com/').content.decode('utf-8').strip()
+    EXTERNAL_IPV6 = requests.get('https://ipv6.icanhazip.com/').content.decode('utf-8').strip()
     return EXTERNAL_IPV4, EXTERNAL_IPV6

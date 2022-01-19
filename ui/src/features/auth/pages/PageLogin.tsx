@@ -5,21 +5,25 @@ import {TextField} from "@mui/material";
 import FullPageLayout from "components/FullPageLayout";
 import {connect} from "react-redux";
 import { useHistory } from 'react-router-dom';
-import {useForm} from "react-hook-form";
+import {Controller, useForm} from "react-hook-form";
 import {login} from "features/auth/authSlice";
 import {useObtainRefreshTokenMutation} from "../apiSlice";
 import {LoadingButton} from "@mui/lab";
 
 
 function PageLogin(props: any) {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, control } = useForm({
+        defaultValues: {
+            username: '',
+            password: '',
+        }
+    });
+    const { isAuthenticated } = props;
     const history = useHistory();
     const [obtainRefreshToken, {isLoading, error}] = useObtainRefreshTokenMutation();
 
-
-    const { isAuthenticated } = props;
-
     const handleLogin = (data: any) => {
+        console.log('datasdf', data)
         // @ts-ignore
         obtainRefreshToken(data).then(data => {
             // @ts-ignore
@@ -40,33 +44,48 @@ function PageLogin(props: any) {
     }, [isAuthenticated]);
 
     return (
-        <FullPageLayout title={'Login'} header={'Login'} maxWidth={'xs'} paper middle padding={4}>
+        <FullPageLayout title={'Login'} header={'Login'} maxWidth={'xs'} paper middle sx={{p: 3,}}>
             <form id={'nav-login'} onSubmit={handleSubmit(handleLogin)}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            size={'small'}
-                            placeholder={'Username'}
-                            name={'username'}
-                            variant={'outlined'}
-                            label={'Username'}
-                            // @ts-expect-error
-                            inputRef={{...register('username')}}
-                            autoComplete={'off'}
+                        <Controller
+                            name={"username"}
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <TextField
+                                    fullWidth
+                                    onChange={onChange}
+                                    value={value}
+                                    variant={'outlined'}
+                                    autoComplete={'off'}
+                                    // @ts-ignore
+                                    inputRef={{...register('username')}}
+                                    name={'username'}
+                                    placeholder={'Username'}
+                                    label={'Username'}
+                                />
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            size={'small'}
-                            placeholder={'Password'}
-                            name={'password'}
-                            variant={'outlined'}
-                            label={'Password'}
-                            type={'password'}
-                            // @ts-expect-error
-                            inputRef={{...register('password')}}
+                        <Controller
+                            name={"password"}
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <TextField
+                                    fullWidth
+                                    onChange={onChange}
+                                    value={value}
+                                    variant={'outlined'}
+                                    autoComplete={'off'}
+                                    type={'password'}
+                                    // @ts-ignore
+                                    inputRef={{...register('password')}}
+                                    name={'password'}
+                                    placeholder={'Password'}
+                                    label={'Password'}
+                                />
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12}>

@@ -9,7 +9,7 @@ export default function NavLeftApp() {
     return (
         <>
             <NavItem to={'/'} primary={'Home'} exact/>
-            <ProtectedNavItem to={'/admin'} primary={<Typography sx={{display: 'flex', alignItems: 'center'}}>Admin Page <OpenInNewIcon sx={{transform: 'scale(0.7)'}}/></Typography>} exact external/>
+            <ProtectedNavItem to={'/admin'} target={'_BLANK'} primary={<Typography sx={{display: 'flex', alignItems: 'center'}}>Admin Page <OpenInNewIcon sx={{transform: 'scale(0.7)'}}/></Typography>} exact external/>
         </>
     );
 

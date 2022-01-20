@@ -92,7 +92,7 @@ export default function NavItem(props: any) {
 
     if (external)
         return (
-            <StyledA href={to} className={classes.root}>
+            <StyledA href={to} target={'_BLANK'} className={classes.root}>
                 <ListItem button disableRipple={active} className={clsx(classes.nested, {
                     [classes.active]: active,
                 })}><ListItemText primary={primary}/></ListItem>

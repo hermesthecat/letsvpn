@@ -113,7 +113,7 @@ function PageWGPeers(props: any) {
                 <Box sx={{minHeight: 200, textAlign: 'center', pt: 5}}>
                     <ErrorIcon sx={{width: 50, height: 50, color: 'error.dark', opacity: 0.7}}/>
                     <Typography variant={'h6'} sx={{color: 'error.dark', opacity: 0.7, my: 1}}>Encountered an error fetching your WireGuard peers.</Typography>
-                    <Button color={'inherit'} startIcon={<RefreshIcon/>} onClick={handleRefetch}>Refresh</Button>
+                    <Button color={'primary'} sx={{mt: 2}} variant={'contained'} startIcon={<RefreshIcon/>} onClick={handleRefetch}>Refresh</Button>
                 </Box>
             </Fade>
             <Fade in={!isFetching && !error && peers?.length === 0} unmountOnExit>

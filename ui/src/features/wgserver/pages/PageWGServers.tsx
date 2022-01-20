@@ -1,23 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import FullPageLayout from "components/FullPageLayout";
-import {connect} from "react-redux";
-import {api} from "features/auth/authSlice";
-import {
-    Avatar, Box, Button, CircularProgress, Fade,
-    IconButton,
-    Paper, SpeedDial, SpeedDialAction,
-    styled, Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow, Typography
-} from "@mui/material";
+import {Box, Button, Fade, styled, Typography} from "@mui/material";
 import WGServerBlock from "../components/WGServerBlock";
-import {setWGServers} from "../wgServerSlice";
 import {WGServer} from "app/types";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import {useGetAllPeersQuery, useGetAllServersQuery} from "../../auth/apiSlice";
+import {useGetAllServersQuery} from "../../auth/apiSlice";
 import WGServerBlockSkeleton from "../components/WGServerBlockSkeleton";
 import ErrorIcon from "@mui/icons-material/Error";
 import RefreshIcon from "@mui/icons-material/Refresh";
@@ -61,7 +48,7 @@ export default function PageWGServers(props: any) {
                 <Box sx={{minHeight: 200, textAlign: 'center', pt: 4}}>
                     <ErrorIcon sx={{width: 50, height: 50, color: 'error.dark', opacity: 0.7}}/>
                     <Typography variant={'h6'} sx={{color: 'error.dark', opacity: 0.7}}>Encountered an error fetching your WireGuard servers.</Typography>
-                    <Button color={'inherit'} startIcon={<RefreshIcon/>} onClick={handleRefetch}>Refresh</Button>
+                    <Button color={'primary'} sx={{mt: 2}} startIcon={<RefreshIcon/>} onClick={handleRefetch} variant={'contained'}>Refresh</Button>
                 </Box>
             </Fade>
             <Fade in={!isFetching && error === undefined && servers?.length === 0} unmountOnExit>

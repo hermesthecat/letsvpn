@@ -1,11 +1,46 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/dist/query/react";
 
 const guestUser = {
     id: 0,
     name: 'Guest',
 }
+
+
+export const authApi = createApi({
+    reducerPath: 'authApi',
+    baseQuery: fetchBaseQuery({
+        baseUrl: '/api/',
+        prepareHeaders: (headers, { getState }) => {
+            const token = (getState()).auth.access?.isAuthenticated;
+            // If we have a token set in state, let's assume that we should be passing it.
+            //if (token)
+            //   headers.set('authorization', `Bearer ${token}`);
+            return headers;
+        },
+    }),
+    endpoints: (builder) => ({
+        getServerByID: builder.query({
+            query: (id) => `wg/servers/${id}/`,
+        }),
+        getAllServers: builder.query({
+            query: () => `wg/servers/`,
+        }),
+        getAllPeers: builder.query({
+            query: () => `wg/peers/`,
+        }),
+        obtainRefreshToken: builder.mutation({
+            query: (formData) => ({
+                url: `auth/token/obtain/`,
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: formData,
+            }),
+        }),
+    }),
+});
 
 
 const authSlice = createSlice({

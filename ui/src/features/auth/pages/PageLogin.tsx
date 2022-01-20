@@ -23,7 +23,6 @@ function PageLogin(props: any) {
     const [obtainRefreshToken, {isLoading, error}] = useObtainRefreshTokenMutation();
 
     const handleLogin = (data: any) => {
-        console.log('datasdf', data)
         // @ts-ignore
         obtainRefreshToken(data).then(data => {
             // @ts-ignore

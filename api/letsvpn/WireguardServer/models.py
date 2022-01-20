@@ -17,7 +17,7 @@ def create_default_server(apps, schema_editor):
     WireguardServer = apps.get_model('letsvpn', 'WireguardServer')
 
     db_alias = schema_editor.connection.alias
-    WireguardServer.objects.using(db_alias).bulk_create([WireguardServer()])
+    WireguardServer.objects.using(db_alias).bulk_create([WireguardServer(default=True)])
 
 
 def delete_default_server():

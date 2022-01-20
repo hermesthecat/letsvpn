@@ -1,28 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import {
-    Avatar, Box, Collapse,
+    Box,
     Divider,
-    Grid, IconButton,
-    Paper, SpeedDial, SpeedDialAction,
-    styled, Switch,
+    Grid,
+    Paper,
+    styled,
     Table,
     TableBody,
-    TableCell, TableContainer,
-    TableHead,
-    TableRow, TextField, Tooltip,
+    TableCell,
+    TableContainer,
+    TableRow,
+    TextField,
     Typography
 } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import Image from "components/Image";
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {api} from "features/auth/authSlice";
 import {connect} from "react-redux";
-import {WGPeer, WGServer} from "../../../app/types";
-import SettingsPowerIcon from '@mui/icons-material/SettingsPower';
-import LensBlurIcon from '@mui/icons-material/LensBlur';
+import {WGServer} from "../../../app/types";
 import isPropValid from '@emotion/is-prop-valid'
-import { Skeleton } from '@mui/material';
-import WGServerBlockInfo from "../../app/pages/WGServerBlockInfo";
+import WGServerBlockInfo from "./WGServerBlockInfo";
 
 
 const PREFIX = 'WGServerBlock';
@@ -51,13 +46,8 @@ const StyledWGServerBlock = styled(Paper, {
         margin: theme.spacing(1, 0),
     },
 }));
-/*
-const StyledTableRow = styled(TableRow)(({ theme }: StyleProps) => ({
-    [`&.${classes.root}`]: {
-        padding: theme.spacing(2),
-    },
-}));
-*/
+
+
 function WGServerBlock(props: any) {
     const { api } = props;
 

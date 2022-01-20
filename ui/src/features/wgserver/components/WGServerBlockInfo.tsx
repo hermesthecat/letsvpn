@@ -1,17 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import Typography from '@mui/material/Typography';
-import FullPageLayout from 'components/FullPageLayout';
-import {Box, Button, Fade, Grow, IconButton, Paper, styled, Tooltip} from '@mui/material';
+import {Box, styled, Tooltip} from '@mui/material';
 import isPropValid from '@emotion/is-prop-valid';
 import LensBlurIcon from '@mui/icons-material/LensBlur';
 import SettingsPowerIcon from '@mui/icons-material/SettingsPower';
 import clsx from 'clsx';
 import {getRandomInt, sleep} from "../../../lib/common";
-import {grey} from "@mui/material/colors";
 import {SpeedDial, SpeedDialAction} from "@mui/lab";
 import StopIcon from '@mui/icons-material/Stop';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 const PREFIX = 'WGServerStatusIcon';
@@ -259,14 +255,9 @@ const StyledWGServerStatusIcon = styled(Box, {
     ['@keyframes statusIconEntrance']: {
         '0%': {
             filter: 'opacity(0)',
-            //opacity: 0.25,
-            //transform: 'rotate(0%)'
         },
         '100%': {
             filter: 'opacity(1)',
-
-            //opacity: 1,
-            //transform: 'rotate(100%)'
         }
     },
 }));
@@ -279,15 +270,6 @@ const STATUS = {
     STOPPING: 4,
 }
 
-/*
-
-                <Button onClick={() => {setStatus(STATUS.DISABLED)}}>Disabled</Button>
-                <Button onClick={() => {setStatus(STATUS.STOPPED)}}>Stopped</Button>
-                <Button onClick={() => {setStatus(STATUS.RUNNING)}}>Running</Button>
-                <Button onClick={() => {setStatus(STATUS.STARTING); sleep(getRandomInt(4000,7000)).then(() => {setStatus(STATUS.RUNNING)})}}>Starting</Button>
-                <Button onClick={() => {setStatus(STATUS.STOPPING); sleep(getRandomInt(4000,7000)).then(() => {setStatus(STATUS.STOPPED)})}}>Stopping</Button>
-                <Box>Status: {status}</Box>
- */
 
 export default function WGServerBlockInfo(props: any) {
     useEffect(() => {

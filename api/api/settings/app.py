@@ -65,7 +65,6 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         DEFAULT_PERMISSION_CLASS,
-        #'rest_framework.permissions.IsAuthenticated',
     ],
     #'DEFAULT_RENDERER_CLASSES': (
     #    'rest_framework.renderers.BrowsableAPIRenderer',

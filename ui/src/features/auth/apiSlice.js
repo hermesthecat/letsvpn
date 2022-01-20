@@ -6,10 +6,15 @@ export const wireguardApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: '/api/',
         prepareHeaders: (headers, { getState }) => {
-            const token = (getState()).auth.access?.isAuthenticated;
+            const token = (getState()).auth.access?.token;
+            console.log('preparing token', token);
             // If we have a token set in state, let's assume that we should be passing it.
-            //if (token)
-             //   headers.set('authorization', `Bearer ${token}`);
+            if (token) {
+                console.log('setting header', `Bearer ${token}`);
+                headers.set('authorization', `Bearer ${token}`);
+                //headers.authorization = `Bearer ${token}`;
+            }
+            console.log(headers);
             return headers;
         },
     }),

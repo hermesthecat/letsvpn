@@ -54,6 +54,7 @@ class UUIDModel(Model):
                 super().save(*args, **kwargs)
                 saved = True
             except IntegrityError as e:
+                # TODO: catch IntegrityError and make sure it's cause of unique UUID failing and not something else
                 log.debug(e)
                 if attempts > 5:
                     raise RuntimeError('Max attempts reached trying to save to database.')

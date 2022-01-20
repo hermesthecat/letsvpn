@@ -2,10 +2,7 @@ import React, {useEffect, useState} from 'react';
 import FullPageLayout from "components/FullPageLayout";
 import {connect} from "react-redux";
 import {api} from "features/auth/authSlice";
-import {
-    Box,
-    styled,
-} from "@mui/material";
+import {Box, styled,} from "@mui/material";
 import {setWGPeers} from "../wgPeersSlice";
 import {WGPeer} from "app/types";
 

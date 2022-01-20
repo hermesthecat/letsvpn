@@ -1,10 +1,10 @@
 import React from 'react';
 import '../assets/App.css';
 import MaterialUIApp from "./MaterialUIApp";
-import { ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles";
+import {StyledEngineProvider, Theme, ThemeProvider} from "@mui/material/styles";
 import theme from "./theme";
 import CssBaseline from "@mui/material/CssBaseline";
-import { Provider } from 'react-redux'
+import {Provider} from 'react-redux'
 import {store} from './store'
 import {BrowserRouter as Router} from "react-router-dom";
 import MUIToastContainer from "../components/MUIToastContainer";

@@ -1,14 +1,12 @@
 import React from 'react';
-import { lighten } from '@mui/material/styles';
+import {lighten} from '@mui/material/styles';
 import {appBarHeight, drawerWidth} from "app/theme";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-import {
-    toggleDrawer,
-} from "features/app/appSlice";
+import {toggleDrawer,} from "features/app/appSlice";
 import {connect} from "react-redux";
 import NavLeftAuth from "features/auth/nav";
 import NavLeftApp from "features/app/nav";

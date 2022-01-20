@@ -6,7 +6,6 @@ import {appBarHeight, drawerWidth} from "../../../app/theme";
 import NavTopLeft from "./NavTopLeft";
 import clsx from "clsx";
 import NavTopRight from "./NavTopRight";
-import {blue} from "@mui/material/colors";
 import {connect} from "react-redux";
 import {styled} from "@mui/material";
 

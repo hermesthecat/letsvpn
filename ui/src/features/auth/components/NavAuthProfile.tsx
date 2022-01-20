@@ -10,7 +10,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
-import {Avatar, Box, Typography} from "@mui/material";
+import {Avatar, Box} from "@mui/material";
 import {grey} from "@mui/material/colors";
 
 

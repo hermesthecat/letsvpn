@@ -1,15 +1,12 @@
 // @ts-ignore
 import React, {useEffect, useState} from 'react';
 import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
 import {connect} from "react-redux";
-import {Box, CircularProgress, Fade, Grid, styled, TextField, Typography} from "@mui/material";
+import {Box, Fade, Grid, TextField, Typography} from "@mui/material";
 import {login} from "features/auth/authSlice";
-import { Controller, useForm } from "react-hook-form";
-import {useObtainRefreshTokenLazyQuery, useObtainRefreshTokenMutation} from "../apiSlice";
+import {Controller, useForm} from "react-hook-form";
+import {useObtainRefreshTokenMutation} from "../apiSlice";
 import LoadingButton from '@mui/lab/LoadingButton';
-import clsx from "clsx";
-import {toast, ToastContainer} from "react-toastify";
 import {useToasts} from "react-toast-notifications";
 
 

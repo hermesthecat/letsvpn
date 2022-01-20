@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from "@mui/material/IconButton";
 import {connect} from "react-redux";
-import { toggleDrawer } from "../../../features/app/appSlice";
+import {toggleDrawer} from "../../../features/app/appSlice";
 import {styled} from "@mui/material";
 
 const PREFIX = 'NavTopLeft';

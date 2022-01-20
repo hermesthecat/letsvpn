@@ -4,7 +4,6 @@ import NavAuthProfile from "./components/NavAuthProfile";
 import NavAuthForm from "./components/NavAuthForm";
 
 
-
 function NavLeftAuth(props: any) {
     const { isAuthenticated } = props;
 

@@ -1,21 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
-    Avatar, Box, Collapse,
-    Divider,
-    Grid, IconButton,
-    Paper,
-    styled, Switch,
+    Avatar,
+    Collapse,
+    Grid,
+    IconButton,
+    styled,
+    Switch,
     Table,
     TableBody,
-    TableCell, TableContainer,
-    TableHead,
-    TableRow,
-    Typography
+    TableCell,
+    TableContainer,
+    TableRow
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Image from "components/Image";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import {setWGPeers} from "../wgPeersSlice";
 import {api} from "features/auth/authSlice";
 import {connect} from "react-redux";
 import {WGPeer} from "../../../app/types";

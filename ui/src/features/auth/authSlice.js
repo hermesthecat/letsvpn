@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit'
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/dist/query/react";

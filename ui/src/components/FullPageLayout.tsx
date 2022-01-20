@@ -6,7 +6,7 @@ import {Box, Paper} from "@mui/material";
 import clsx from "clsx";
 import {appName} from "../app/App";
 import {grey} from "@mui/material/colors";
-import { styled } from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 
 
 const PREFIX = 'FullPageLayout';

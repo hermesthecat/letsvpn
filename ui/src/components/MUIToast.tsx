@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, makeStyles, Paper, styled} from "@mui/material";
+import {Alert, styled} from "@mui/material";
 
 const PREFIX = 'MUIToast';
 const classes = {

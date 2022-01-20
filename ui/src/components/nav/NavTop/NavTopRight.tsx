@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import {Avatar, styled} from "@mui/material";
 import {logout} from "../../../features/auth/authSlice";
 import {connect} from "react-redux";
+
 const PREFIX = 'NavTopRight';
 
 const classes = {

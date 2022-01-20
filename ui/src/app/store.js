@@ -1,23 +1,14 @@
-import { configureStore } from '@reduxjs/toolkit'
+import {configureStore} from '@reduxjs/toolkit'
 import {combineReducers} from "redux";
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
-import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER
-} from 'redux-persist'
+import {persistReducer, persistStore} from 'redux-persist'
 
 import appReducer from 'features/app/appSlice'
 import authReducer from 'features/auth/authSlice'
-import { wireguardApi } from 'features/auth/apiSlice'
+import {wireguardApi} from 'features/auth/apiSlice'
 import wgPeersReducer from 'features/wgpeers/wgPeersSlice'
 import wgServerReducer from 'features/wgserver/wgServerSlice'
-import { setupListeners } from '@reduxjs/toolkit/query'
+import {setupListeners} from '@reduxjs/toolkit/query'
 
 
 // Add any other reducers you have here

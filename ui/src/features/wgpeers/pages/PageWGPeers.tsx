@@ -1,26 +1,26 @@
 // @ts-nocheck TODO
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import FullPageLayout from "components/FullPageLayout";
 import {connect} from "react-redux";
-import {api, newAPI} from "features/auth/authSlice";
+import {api} from "features/auth/authSlice";
 import {
-    Avatar, Box, Button, CircularProgress, Fade,
-    IconButton,
-    Paper, Skeleton, SpeedDial, SpeedDialAction,
-    styled, Switch, Table,
+    Box,
+    Button,
+    Fade,
+    Paper,
+    styled,
+    Table,
     TableBody,
     TableCell,
     TableContainer,
     TableHead,
-    TableRow, Typography
+    TableRow,
+    Typography
 } from "@mui/material";
 import WGPeerRow from "../components/WGPeerRow";
 import {setWGPeers} from "../wgPeersSlice";
-import {WGPeer} from "app/types";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {useGetAllPeersQuery} from "features/auth/apiSlice";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import clsx from "clsx";
 import {sleep} from "../../../lib/common";
 import ErrorIcon from '@mui/icons-material/Error';

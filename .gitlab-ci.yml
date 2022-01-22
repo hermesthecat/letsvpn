@@ -58,13 +58,9 @@ build_node:
   cache:
     key: "node_modules"
     paths:
-      - ui/node_modules
-    cache:
-      key:
-        files:
-          - yarn.lock
-      paths:
-        - .yarn-cache/
+      - .yarn-cache/
+    files:
+      - yarn.lock
   script:
     #- sleep 600
     - cd ui

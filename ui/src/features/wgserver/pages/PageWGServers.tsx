@@ -8,6 +8,7 @@ import {useGetAllServersQuery} from "../../auth/apiSlice";
 import WGServerBlockSkeleton from "../components/WGServerBlockSkeleton";
 import ErrorIcon from "@mui/icons-material/Error";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 
 const PREFIX = 'PageWGServers';
@@ -43,7 +44,7 @@ export default function PageWGServers(props: any) {
 
     return (
         <StyledFullPageLayout title={'Servers'} header={'WireGuard Servers'} className={classes.testcss}>
-            <Fade in={isFetching === true} unmountOnExit><Box className={classes.loadingBox}>{[...Array(3)].map(n => <WGServerBlockSkeleton key={n}/>)}</Box></Fade>
+            <Fade in={isFetching === true} unmountOnExit><Box className={classes.loadingBox}>{[...Array(3)].map((n, i) => <WGServerBlockSkeleton key={i}/>)}</Box></Fade>
             <Fade in={(!isFetching && error !== undefined) as boolean} unmountOnExit>
                 <Box sx={{minHeight: 200, textAlign: 'center', pt: 4}}>
                     <ErrorIcon sx={{width: 50, height: 50, color: 'error.dark', opacity: 0.7}}/>
@@ -59,7 +60,7 @@ export default function PageWGServers(props: any) {
             </Fade>
             <Fade in={!isFetching && error === undefined && servers?.length > 0}>
                 <Box>
-                    <a href={'/admin/letsvpn/wireguardserver/add/'} target={'_BLANK'}><Button variant={'contained'} startIcon={<AddCircleIcon/>} sx={{m:1}}>New Server</Button></a>
+                    <a href={'/admin/letsvpn/wireguardserver/add/'} target={'_BLANK'}><Button variant={'contained'} startIcon={<AddCircleIcon/>} sx={{m:1}}>New Server <OpenInNewIcon sx={{transform: 'scale(0.7)'}}/></Button></a>
                     {servers?.map((s: WGServer) => <WGServerBlock server={s} key={s.id}/>)}
                 </Box>
             </Fade>

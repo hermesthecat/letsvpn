@@ -58,20 +58,7 @@ function WGServerBlock(props: any) {
     const [peersError, setPeersError] = useState<boolean>(true);
 
     const loadWGPeers = async () => {
-        /*
-        setPeersLoading(true);
-        setPeersError(false);
-        api({url: `/api/wg/servers/${server.id}/peers/`}).then((data: WGServer[]) => {
-            console.debug(`WireGuard peers for server ${server.id}`, data);
-            setPeers(data);
-            setPeersLoading(false);
-            setPeersError(false);
-        }).catch((e: any) => {
-            console.error(`Error fetching WireGuard peers for server ${server.id}`, e);
-            setPeersError(true);
-            setPeersLoading(false);
-        });*/
-        // TODO: Implement method
+        // TODO: Implement method to grab peers for this server
         setPeersLoading(false);
         setPeersError(false);
     }
@@ -86,7 +73,7 @@ function WGServerBlock(props: any) {
                 <Grid item md={12} sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 1, pl: 2}}>
                     <Typography variant={'h3'}>{server.name}</Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center'}}>
-                        <WGServerBlockInfo />
+                        <WGServerBlockInfo serverID={server.id}/>
                     </Box>
                 </Grid>
                 <Grid item md={12}><Divider/></Grid>
@@ -101,13 +88,13 @@ function WGServerBlock(props: any) {
                                 <TableRow>
                                     <TableCell><b>Private Key</b></TableCell>
                                     <TableCell>
-                                        <TextField fullWidth disabled value={server.private_key} variant={'outlined'} size={'small'}/>
+                                        <TextField fullWidth disabled value={server.private_key ? server.private_key : ''} variant={'outlined'} size={'small'}/>
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell sx={{borderBottom: 'none'}}><b>Public Key</b></TableCell>
                                     <TableCell sx={{borderBottom: 'none'}}>
-                                        <TextField fullWidth disabled value={server.public_key} variant={'outlined'} size={'small'}/>
+                                        <TextField fullWidth disabled value={server.public_key ? server.public_key : ''} variant={'outlined'} size={'small'}/>
                                     </TableCell>
                                 </TableRow>
                             </TableBody>

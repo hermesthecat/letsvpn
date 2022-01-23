@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {Box, styled, Tooltip} from '@mui/material';
+import {Box, SpeedDial, SpeedDialAction, styled, Tooltip} from '@mui/material';
 import isPropValid from '@emotion/is-prop-valid';
 import LensBlurIcon from '@mui/icons-material/LensBlur';
 import SettingsPowerIcon from '@mui/icons-material/SettingsPower';
 import clsx from 'clsx';
 import {getRandomInt, sleep} from "../../../lib/common";
-import {SpeedDial, SpeedDialAction} from "@mui/lab";
 import StopIcon from '@mui/icons-material/Stop';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import {useGetAllServersQuery, useGetServerStatusQuery, useStopServerQuery, useStartServerQuery, useRestartServerQuery, wireguardApi} from "features/auth/apiSlice";
 
 const PREFIX = 'WGServerStatusIcon';
 const classes = {
@@ -272,12 +272,55 @@ const STATUS = {
 
 
 export default function WGServerBlockInfo(props: any) {
+
+    const { serverID } = props;
+    const [status, setStatus] = useState<number>(STATUS.DISABLED);
+
     useEffect(() => {
     }, []);
-    const [status, setStatus] = useState<number>(STATUS.STARTING);
+    const [stopServer, lastArgStop] = wireguardApi.endpoints.stopServer.useLazyQuerySubscription(serverID);
+    const [startServer, lastArgStart] = wireguardApi.endpoints.startServer.useLazyQuerySubscription(serverID);
+    const [restartServer, lastArgRestart] = wireguardApi.endpoints.restartServer.useLazyQuerySubscription(serverID);
+    //const {
+    //    data: serverStartResult,
+    //    error: serverStartError,
+    //    isLoading: isStartping,
+    //    refetch: startServer,
+    //} = useStartServerQuery(serverID);
+    //const {
+    //    data: serverRestartResult,
+    //    error: serverRestartError,
+    //    isLoading: isRestartping,
+    //    refetch: restartServer,
+    //} = useRestartServerQuery(serverID);
+
 
     const toggleMenu = () => {
 
+    }
+
+    const handleStartServer = () => {
+        setStatus(STATUS.STARTING);
+        startServer(serverID).then((result: any) => {
+            console.log('start result', result);
+            setStatus(STATUS.RUNNING);
+        });
+    }
+
+    const handleStopServer = () => {
+        setStatus(STATUS.STOPPING);
+        stopServer(serverID).then((result: any) => {
+            console.log('stop result', result);
+            setStatus(STATUS.STOPPED);
+        });
+    }
+
+    const handleRestartServer = () => {
+        setStatus(STATUS.STARTING);
+        restartServer(serverID).then((result: any) => {
+            console.log('restart result', result);
+            setStatus(STATUS.RUNNING);
+        });
     }
 
 
@@ -313,19 +356,19 @@ export default function WGServerBlockInfo(props: any) {
                         <SpeedDialAction
                             // @ts-ignore
                             tooltipTitle={'Start'} tooltipOpen
-                            onClick={() => { setStatus(STATUS.STARTING); sleep(getRandomInt(2000, 7000)).then(() => {setStatus(STATUS.RUNNING)}) }}
+                            onClick={handleStartServer}
                             icon={<ArrowUpwardIcon/>}
                         />
                         <SpeedDialAction
                             // @ts-ignore
                             tooltipTitle={'Stop'} tooltipOpen
-                            onClick={() => { setStatus(STATUS.STOPPING); sleep(getRandomInt(2000, 7000)).then(() => {setStatus(STATUS.STOPPED)}) }}
+                            onClick={handleStopServer}
                             icon={<StopIcon/>}
                         />
                         <SpeedDialAction
                             // @ts-ignore
                             tooltipTitle={'Restart'} tooltipOpen
-                            onClick={() => { setStatus(STATUS.STARTING); sleep(getRandomInt(2000, 7000)).then(() => {setStatus(STATUS.RUNNING)}) }}
+                            onClick={handleRestartServer}
                             icon={<RestartAltIcon/>}
                         />
                     </SpeedDial>

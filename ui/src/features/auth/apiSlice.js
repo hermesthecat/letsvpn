@@ -9,9 +9,6 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
         // try to get a new token
         const auth = JSON.parse(JSON.parse(localStorage.getItem('persist:letsvpn')).auth);
         const token = auth.refresh.token;
-
-        // TODO: check if refresh token is expired.
-
         const refreshResult = await baseQuery({
             url: '/auth/token/refresh/',
             method: 'POST',
@@ -49,14 +46,38 @@ export const wireguardApi = createApi({
     reducerPath: 'wireguardApi',
     baseQuery: baseQueryWithReauth,
     endpoints: (builder) => ({
+        getAllPeers: builder.query({
+            query: () => `wg/peers/`,
+        }),
+        getPeerByID: builder.query({
+            query: (id) => `wg/peers/${id}`,
+        }),
+        togglePeer: builder.query({
+            query: (id) => `wg/peers/${id}/toggle/`,
+        }),
         getServerByID: builder.query({
             query: (id) => `wg/servers/${id}/`,
         }),
         getAllServers: builder.query({
             query: () => `wg/servers/`,
         }),
-        getAllPeers: builder.query({
-            query: () => `wg/peers/`,
+        getServerStatus: builder.query({
+            query: (id) => `wg/servers/${id}/status/`,
+        }),
+        startServer: builder.query({
+            query: (id) => `wg/servers/${id}/start/`,
+        }),
+        stopServer: builder.query({
+            query: (id) => `wg/servers/${id}/stop/`,
+        }),
+        restartServer: builder.query({
+            query: (id) => `wg/servers/${id}/restart/`,
+        }),
+        toggleServer: builder.query({
+            query: (id) => `wg/servers/${id}/toggle/`,
+        }),
+        rebuildServer: builder.query({
+            query: (id) => `wg/servers/${id}/rebuild/`,
         }),
         obtainRefreshToken: builder.mutation({
             query: (formData) => ({
@@ -80,8 +101,8 @@ export const wireguardApi = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
-    useGetServerByIDQuery, useGetAllServersQuery,
-    useGetAllPeersQuery,
+    useGetServerByIDQuery, useGetAllServersQuery, useGetServerStatusQuery, useStartServerQuery, useStopServerQuery, useRestartServerQuery, useToggleServerQuery, useRebuildServerQuery,
+    useGetPeerByIDQuery, useGetAllPeersQuery, useGetPeerStatusQuery, useStartPeerQuery, useStopPeerQuery, useRestartPeerQuery, useTogglePeerQuery, useRebuildPeerQuery,
     useObtainRefreshTokenLazyQuery,
     useObtainRefreshTokenMutation,
 } = wireguardApi

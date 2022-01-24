@@ -64,9 +64,10 @@ build_node:
   script:
     #- sleep 600
     - cd ui
-    - echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
-    - echo 'yarn-offline-mirror-pruning true' >> .yarnrc
-    - yarn install --frozen-lockfile --no-progress --network-timeout 600000  # 600000ms == 10 min; required as a workaround for @material-ui/icons
+    #- echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
+    #- echo 'yarn-offline-mirror-pruning true' >> .yarnrc
+    #- yarn install --frozen-lockfile --no-progress --network-timeout 600000  # 600000ms == 10 min; required as a workaround for @material-ui/icons
+    - yarn install --no-progress --network-timeout 600000  # 600000ms == 10 min; required as a workaround for @material-ui/icons
     - CI=false yarn build
     - mv build ../http
 

@@ -17,7 +17,7 @@ router.register(r'^api/user', api_viewsets.UserViewSet, 'user')
 
 # Add urls for base Django
 urlpatterns = [
-    re_path('^admin/', admin.site.urls),
+    re_path('^django/admin', admin.site.urls),
     #re_path('', index, name='index'),
 ]
 urlpatterns += staticfiles_urlpatterns()

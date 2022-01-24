@@ -73,7 +73,7 @@ REST_FRAMEWORK = {
         #'rest_framework_swagger.renderers.SwaggerUIRenderer',
         #'rest_framework_swagger.renderers.OpenAPIRenderer',
     #),
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    #'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 SPECTACULAR_SETTINGS = {

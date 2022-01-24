@@ -10,7 +10,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'f^+5d67i58dty7gx8_2#8e4dw^1k8f&8y_gg&8tb_z4n5%cse0'
 WSGI_APPLICATION = 'api.wsgi.application'
 ASGI_APPLICATION = "api.asgi.application"
+APIDEBUG = env.bool('APIDEBUG', False)
 DEBUG = env.bool('DEBUG', False)
+if APIDEBUG:
+    DEBUG = True
 
 # Django Apps
 INSTALLED_APPS = [

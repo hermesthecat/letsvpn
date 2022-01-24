@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
+from api.logging import log
 from api.settings import WG_COMMAND, WGQ_COMMAND, MEDIA_ROOT
 from .serializers import WireguardServerSerializer, WireguardServerSerializerPublic
 from .models import WireguardServer
@@ -57,17 +58,30 @@ class WireguardServerViewSet(
         # Write server config to file for wireguard
         filename = Path(MEDIA_ROOT) / 'wg-conf' / f'{server.id}.conf'
         with open(filename.as_posix(), 'w') as f:
+            filename.parent.mkdir(exist_ok=True, parents=True)
             f.write(server.config)
 
         # Run command to start tunnel
-        result = subprocess.run([*WGQ_COMMAND, 'up', filename.as_posix()], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        command = [*WGQ_COMMAND, 'up', filename.as_posix()]
+        log.debug(f'Starting server {server.id}...')
+        log.debug(command)
+        result = subprocess.run(command, stdout=subprocess.PIPE).stdout.decode('utf-8')
+        log.debug(result)
         return Response(result, status=200)
 
     @action(methods=['GET'], detail=True, permission_classes=[IsAdminUser])
     def stop(self, request, pk=None):
         user = request.user
         server = WireguardServer.objects.get(pk=pk)
-        result = subprocess.run([*WGQ_COMMAND, 'down', server.name], stdout=subprocess.PIPE).stdout.decode('utf-8')
+
+        filename = Path(MEDIA_ROOT) / 'wg-conf' / f'{server.id}.conf'
+        filename.unlink(missing_ok=True)
+
+        command = [*WGQ_COMMAND, 'down', filename.as_posix()]
+        log.debug(f'Shutting down server {server.id}...')
+        log.debug(command)
+        result = subprocess.run(command, stdout=subprocess.PIPE).stdout.decode('utf-8')
+        log.debug(result)
         return Response(result, status=200)
 
     @action(methods=['GET'], detail=True, permission_classes=[IsAdminUser])
@@ -79,11 +93,19 @@ class WireguardServerViewSet(
         server.config = server.generate_config()
         server.save()
 
+        # Write server config to file for wireguard
+        filename = Path(MEDIA_ROOT) / 'wg-conf' / f'{server.id}.conf'
+        with open(filename.as_posix(), 'w') as f:
+            filename.parent.mkdir(exist_ok=True, parents=True)
+            f.write(server.config)
+
+        log.debug(f'Restarting server {server.id}')
         all_result = ''
         all_result += '\nSTOPPING SERVER\n'
-        all_result += subprocess.run([*WGQ_COMMAND, 'down', server.name], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        all_result += subprocess.run([*WGQ_COMMAND, 'down', filename.as_posix()], stdout=subprocess.PIPE).stdout.decode('utf-8')
         all_result += '\nSTARTING SERVER\n'
-        all_result += subprocess.run([*WGQ_COMMAND, 'up', server.name], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        all_result += subprocess.run([*WGQ_COMMAND, 'up', filename.as_posix()], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        log.debug(all_result)
         return Response(all_result, status=200)
 
     @action(methods=['GET'], detail=True, permission_classes=[AllowAny])

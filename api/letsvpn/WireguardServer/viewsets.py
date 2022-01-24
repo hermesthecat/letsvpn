@@ -1,10 +1,12 @@
 import subprocess
+from pathlib import Path
+
 from rest_framework import viewsets, mixins
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
-from api.settings import WG_COMMAND, WGQ_COMMAND
+from api.settings import WG_COMMAND, WGQ_COMMAND, MEDIA_ROOT
 from .serializers import WireguardServerSerializer, WireguardServerSerializerPublic
 from .models import WireguardServer
 
@@ -52,7 +54,13 @@ class WireguardServerViewSet(
         server.config = server.generate_config()
         server.save()
 
-        result = subprocess.run([*WGQ_COMMAND, 'up', server.name], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        # Write server config to file for wireguard
+        filename = Path(MEDIA_ROOT) / 'wg-conf' / f'{server.id}.conf'
+        with open(filename.as_posix(), 'w') as f:
+            f.write(server.config)
+
+        # Run command to start tunnel
+        result = subprocess.run([*WGQ_COMMAND, 'up', filename.as_posix()], stdout=subprocess.PIPE).stdout.decode('utf-8')
         return Response(result, status=200)
 
     @action(methods=['GET'], detail=True, permission_classes=[IsAdminUser])

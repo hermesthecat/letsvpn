@@ -87,8 +87,8 @@ SPECTACULAR_SETTINGS = {
 }
 
 
-WG_COMMAND = env.list('WG_COMMAND', list('wg'))
-WGQ_COMMAND = env.list('WGQ_COMMAND', list('wg-quick'))
+WG_COMMAND = env.list('WG_COMMAND', list(['wg']))
+WGQ_COMMAND = env.list('WGQ_COMMAND', list(['wg-quick']))
 PI_PASSWORD = env.str('PI_PASSWORD', None)
 PI_IP = env.str('PI_IP', '127.0.0.1')
 

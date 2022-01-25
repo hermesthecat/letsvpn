@@ -84,7 +84,7 @@ class WireguardServer(UUIDModel):
         log.debug(peers)
         for peer in peers:
             text = f'\n[Peer]\n' \
-                 f'PublicKey = {self.public_key}\n' \
+                 f'PublicKey = {peer.public_key}\n' \
                  f'AllowedIPs = {peer.address}/32\n'
             if peer.keepalive:
                 text += f'PersistentKeepalive = {peer.keepalive}\n'

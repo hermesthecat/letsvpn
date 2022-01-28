@@ -1,5 +1,6 @@
-import subprocess
 import urllib.request
+from subprocess import PIPE, Popen
+
 import requests
 
 
@@ -8,13 +9,13 @@ from api.logging import log
 
 def generate_keypair():
     # Generate private key
-    private_process = subprocess.Popen(['wg', 'genkey'], stdout=subprocess.PIPE)
+    private_process = Popen(['wg', 'genkey'], stdout=PIPE)
     private = private_process.stdout.read().decode('utf-8').strip()
     log.debug(f'Private key: {private}')
 
     # Generate public key from private key
-    public_process = subprocess.run(['wg', 'pubkey'], stdout=subprocess.PIPE, stdin=private_process.stdout)
-    public = public_process.stdout.decode('utf-8').strip()
+    public_process = Popen(['wg', 'pubkey'], stdout=PIPE, stdin=PIPE)
+    public = public_process.communicate(input=private.encode('utf-8'))[0].decode('utf-8').strip()
     log.debug(f'Public key: {public}')
     return private, public
 

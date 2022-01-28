@@ -73,9 +73,11 @@ class WireguardServerViewSet(
         command = [*WGQ_COMMAND, 'up', str(filename.resolve())]
         log.debug(f'Starting server {server.id}...')
         log.debug(command)
-        result = subprocess.run(command, stdout=subprocess.PIPE).stdout.decode('utf-8')
-        log.debug(result)
-        return Response(result, status=200)
+        start = subprocess.run(command, stdout=subprocess.PIPE).stdout.decode('utf-8')
+        log.debug(start)
+
+        status = subprocess.run(WG_COMMAND, stdout=subprocess.PIPE).stdout.decode('utf-8')
+        return Response(status, status=200)
 
     @action(methods=['GET'], detail=False)
     def autostart(self, request, pk=None):

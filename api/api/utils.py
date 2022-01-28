@@ -13,7 +13,7 @@ def generate_keypair():
     log.debug(f'Private key: {private}')
 
     # Generate public key from private key
-    public_process = subprocess.run(['wg', 'genkey'], stdout=subprocess.PIPE, stdin=private_process.stdout)
+    public_process = subprocess.run(['wg', 'pubkey'], stdout=subprocess.PIPE, stdin=private_process.stdout)
     public = public_process.stdout.decode('utf-8').strip()
     log.debug(f'Public key: {public}')
     return private, public

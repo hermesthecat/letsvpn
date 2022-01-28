@@ -27,6 +27,7 @@ def get_external_ip():
     except:
         log.error('Unable to resolve external IPv4 address.  Using local.')
         EXTERNAL_IPV4 = None
+
     try:
         EXTERNAL_IPV6 = requests.get('https://ipv6.icanhazip.com/').content.decode('utf-8').strip()
     except:
